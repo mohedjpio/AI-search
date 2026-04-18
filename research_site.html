@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>تأثير قبول أعضاء هيئة التدريس لاستخدام الذكاء الاصطناعي على تبني ممارسات التعليم الرقمي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════ */
+:root {
+  --green-deep:#0d3b2e;
+  --green-mid:#1a5c44;
+  --green-bright:#2d8c60;
+  --green-light:#52b788;
+  --green-pale:#b7e4c7;
+  --sand:#f2e8d5;
+  --sand-dark:#e8d9bd;
+  --amber:#c9a227;
+  --amber-light:#f0c040;
+  --cream:#faf7f0;
+  --white:#ffffff;
+  --text-dark:#0d1f17;
+  --text-mid:#2a4a38;
+  --text-soft:#5a7a68;
+  --text-muted:#8aab96;
+  --border:#d4e8d8;
+  --shadow-card:0 4px 24px rgba(13,59,46,0.09);
+  --shadow-hover:0 16px 48px rgba(13,59,46,0.18);
+  --r:16px;
+  --r-sm:10px;
+  --font-h:'Tajawal',sans-serif;
+  --font-b:'IBM Plex Sans Arabic',sans-serif;
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-b);background:var(--cream);color:var(--text-dark);direction:rtl;overflow-x:hidden;line-height:1.75}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+
+/* ═══════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════ */
+.page-wrap{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
+
+/* ═══════════════════════════════════════════
+   SIDEBAR
+═══════════════════════════════════════════ */
+.sidebar{
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+  background:var(--green-deep);
+  display:flex;flex-direction:column;
+  padding:0;
+  z-index:100;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,0.1) transparent;
+}
+.sidebar-header{
+  padding:32px 28px 24px;
+  border-bottom:1px solid rgba(255,255,255,0.07);
+}
+.sidebar-logo{
+  display:flex;align-items:center;gap:10px;margin-bottom:8px;
+}
+.logo-ring{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--green-light),var(--amber-light));
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.9rem;flex-shrink:0;
+}
+.logo-text{font-family:var(--font-h);font-size:0.85rem;font-weight:700;color:white;line-height:1.3}
+.sidebar-sub{font-size:0.72rem;color:rgba(255,255,255,0.4);padding:0 0 0 46px;line-height:1.4}
+
+.nav-list{list-style:none;padding:16px 0;flex:1}
+.nav-item{border-bottom:1px solid rgba(255,255,255,0.04)}
+.nav-link{
+  display:flex;align-items:center;gap:12px;
+  padding:13px 28px;
+  font-size:0.85rem;font-family:var(--font-b);font-weight:500;
+  color:rgba(255,255,255,0.55);
+  transition:all 0.25s ease;
+  cursor:pointer;position:relative;
+}
+.nav-link:hover,.nav-link.active{
+  color:white;
+  background:rgba(255,255,255,0.06);
+}
+.nav-link.active::before{
+  content:'';position:absolute;right:0;top:0;bottom:0;
+  width:3px;background:var(--green-light);border-radius:2px 0 0 2px;
+}
+.nav-icon{
+  width:28px;height:28px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.85rem;flex-shrink:0;
+  background:rgba(255,255,255,0.07);
+  transition:background 0.25s;
+}
+.nav-link.active .nav-icon{background:rgba(82,183,136,0.2)}
+.nav-num{
+  font-size:0.65rem;color:rgba(255,255,255,0.25);
+  margin-right:auto;font-family:var(--font-h);
+}
+
+.sidebar-footer{
+  padding:20px 28px;
+  border-top:1px solid rgba(255,255,255,0.07);
+  font-size:0.72rem;color:rgba(255,255,255,0.25);
+  line-height:1.5;
+}
+
+/* Mobile Toggle */
+.mob-toggle{
+  display:none;position:fixed;bottom:24px;left:24px;
+  width:52px;height:52px;border-radius:50%;
+  background:var(--green-mid);color:white;
+  font-size:1.3rem;border:none;cursor:pointer;
+  box-shadow:0 8px 24px rgba(13,59,46,0.35);
+  z-index:200;transition:all 0.3s;
+}
+
+/* ═══════════════════════════════════════════
+   MAIN CONTENT
+═══════════════════════════════════════════ */
+.main{overflow-y:auto}
+
+/* ── SECTION BASE ── */
+.section{
+  min-height:100vh;padding:80px 64px;
+  border-bottom:1px solid var(--border);
+  position:relative;
+}
+.section:last-child{border-bottom:none}
+
+/* Section Header */
+.s-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(13,59,46,0.06);border:1px solid rgba(13,59,46,0.1);
+  color:var(--green-mid);font-size:0.73rem;font-weight:600;
+  padding:5px 14px;border-radius:100px;
+  letter-spacing:0.07em;font-family:var(--font-b);
+  margin-bottom:14px;
+}
+.s-title{
+  font-family:var(--font-h);
+  font-size:clamp(1.9rem,3.5vw,2.7rem);
+  font-weight:900;color:var(--green-deep);
+  line-height:1.25;margin-bottom:20px;
+}
+.s-lead{
+  font-size:1rem;color:var(--text-soft);
+  max-width:760px;line-height:1.9;margin-bottom:56px;
+}
+
+/* REVEAL ANIMATION */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.65s cubic-bezier(.16,1,.3,1),transform 0.65s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-d="1"]{transition-delay:0.08s}
+.reveal[data-d="2"]{transition-delay:0.16s}
+.reveal[data-d="3"]{transition-delay:0.24s}
+.reveal[data-d="4"]{transition-delay:0.32s}
+.reveal[data-d="5"]{transition-delay:0.40s}
+.reveal[data-d="6"]{transition-delay:0.48s}
+
+/* ═══════════════════════════════════════════
+   1. HERO / COVER
+═══════════════════════════════════════════ */
+#s-cover{
+  min-height:100vh;padding:0;
+  background:linear-gradient(155deg,var(--green-deep) 0%,#1a5c44 45%,#1a3a25 100%);
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.cover-decor{
+  position:absolute;inset:0;overflow:hidden;pointer-events:none;
+}
+.cdot{
+  position:absolute;border-radius:50%;opacity:0.08;
+  background:radial-gradient(circle,var(--green-light),transparent 70%);
+}
+.cdot-1{width:600px;height:600px;top:-200px;right:-200px;animation:drift1 12s ease-in-out infinite}
+.cdot-2{width:400px;height:400px;bottom:-100px;left:-100px;animation:drift2 16s ease-in-out infinite}
+.cdot-3{width:200px;height:200px;top:40%;left:30%;background:radial-gradient(circle,var(--amber-light),transparent 70%);opacity:0.05;animation:drift1 20s ease-in-out infinite reverse}
+@keyframes drift1{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,-40px)}}
+@keyframes drift2{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,30px)}}
+
+/* Grid lines decoration */
+.grid-lines{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size:60px 60px;
+}
+
+.cover-content{
+  position:relative;z-index:2;
+  padding:80px 64px;max-width:900px;
+}
+.cover-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);
+  border-radius:100px;padding:7px 18px;
+  font-size:0.78rem;color:rgba(255,255,255,0.65);
+  margin-bottom:24px;font-family:var(--font-b);
+}
+.badge-pulse{
+  width:6px;height:6px;border-radius:50%;background:var(--green-light);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+.cover-uni{font-size:0.85rem;color:rgba(255,255,255,0.45);margin-bottom:12px;letter-spacing:0.05em}
+.cover-h1{
+  font-family:var(--font-h);font-weight:900;
+  font-size:clamp(2rem,4.5vw,3.6rem);
+  color:white;line-height:1.2;margin-bottom:12px;
+}
+.cover-h1 em{color:var(--green-light);font-style:normal}
+.cover-h2{
+  font-family:var(--font-h);font-size:clamp(1.1rem,2.5vw,1.7rem);
+  font-weight:400;color:rgba(255,255,255,0.7);line-height:1.4;margin-bottom:36px;
+}
+
+.cover-meta{display:flex;flex-wrap:wrap;gap:24px;margin-bottom:48px}
+.cm-item{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  border-radius:12px;padding:12px 18px;
+}
+.cm-icon{font-size:1.1rem}
+.cm-info{display:flex;flex-direction:column;gap:2px}
+.cm-label{font-size:0.67rem;color:rgba(255,255,255,0.35);font-family:var(--font-b)}
+.cm-val{font-size:0.88rem;color:white;font-weight:600;font-family:var(--font-h)}
+
+.toc-preview{
+  display:flex;flex-wrap:wrap;gap:8px;
+}
+.toc-chip{
+  background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);
+  border-radius:100px;padding:5px 14px;
+  font-size:0.76rem;color:rgba(255,255,255,0.5);
+  font-family:var(--font-b);cursor:pointer;
+  transition:all 0.2s;
+}
+.toc-chip:hover{background:rgba(82,183,136,0.15);color:var(--green-pale);border-color:rgba(82,183,136,0.3)}
+
+/* ═══════════════════════════════════════════
+   2. INTRO
+═══════════════════════════════════════════ */
+#s-intro{background:white}
+.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:56px}
+.intro-card{
+  background:var(--cream);border:1px solid var(--border);
+  border-radius:var(--r);padding:36px;
+  transition:all 0.3s ease;
+}
+.intro-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.ic-num{
+  font-family:var(--font-h);font-size:2.5rem;font-weight:900;
+  color:var(--green-pale);line-height:1;margin-bottom:12px;
+}
+.ic-title{font-family:var(--font-h);font-size:1.05rem;font-weight:700;color:var(--green-deep);margin-bottom:10px}
+.ic-body{font-size:0.88rem;color:var(--text-soft);line-height:1.8}
+
+.intro-quote{
+  background:linear-gradient(135deg,var(--green-deep),var(--green-mid));
+  border-radius:var(--r);padding:48px 56px;
+  position:relative;overflow:hidden;
+}
+.iq-mark{
+  position:absolute;top:-20px;right:40px;
+  font-size:12rem;line-height:1;font-family:var(--font-h);
+  color:rgba(255,255,255,0.04);font-weight:900;
+}
+.iq-text{
+  font-family:var(--font-h);font-size:1.25rem;font-weight:500;
+  color:white;line-height:1.7;position:relative;z-index:1;
+  margin-bottom:20px;
+}
+.iq-models{display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:1}
+.iq-model{
+  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);
+  border-radius:8px;padding:8px 16px;
+  font-size:0.82rem;color:var(--green-pale);font-family:var(--font-b);font-weight:600;
+}
+
+/* ═══════════════════════════════════════════
+   3. TERMINOLOGY
+═══════════════════════════════════════════ */
+#s-terms{background:var(--sand)}
+.terms-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.term-card{
+  background:white;border-radius:var(--r);
+  border:1px solid var(--border);
+  overflow:hidden;
+  transition:all 0.3s ease;
+  box-shadow:var(--shadow-card);
+}
+.term-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-hover)}
+.term-header{
+  padding:24px 28px 20px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:flex-start;gap:14px;
+}
+.term-icon{
+  width:44px;height:44px;border-radius:12px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:1.2rem;
+}
+.term-icon.g1{background:rgba(13,59,46,0.08)}
+.term-icon.g2{background:rgba(82,183,136,0.12)}
+.term-icon.g3{background:rgba(201,162,39,0.1)}
+.term-icon.g4{background:rgba(45,140,96,0.1)}
+.term-en{font-size:0.72rem;color:var(--text-muted);font-family:var(--font-b);letter-spacing:0.05em;display:block;margin-bottom:4px}
+.term-ar{font-family:var(--font-h);font-size:1rem;font-weight:800;color:var(--green-deep)}
+.term-body{padding:20px 28px}
+.term-def{font-size:0.88rem;color:var(--text-mid);line-height:1.85;margin-bottom:16px}
+.term-dims{display:flex;flex-wrap:wrap;gap:8px}
+.tdim{
+  background:rgba(13,59,46,0.06);border:1px solid rgba(13,59,46,0.1);
+  color:var(--green-mid);font-size:0.76rem;font-weight:600;
+  padding:4px 12px;border-radius:100px;font-family:var(--font-b);
+}
+
+/* Sub-terms (dimensions detail) */
+.dims-section{margin-top:48px}
+.dims-title{
+  font-family:var(--font-h);font-size:1.3rem;font-weight:800;
+  color:var(--green-deep);margin-bottom:28px;
+}
+.dims-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.dim-block{
+  background:white;border-radius:var(--r-sm);padding:24px 20px;
+  border-top:3px solid var(--c,var(--green-light));
+  box-shadow:var(--shadow-card);
+  transition:all 0.3s;
+}
+.dim-block:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.db-icon{font-size:1.6rem;margin-bottom:12px}
+.db-name{font-family:var(--font-h);font-size:0.9rem;font-weight:700;color:var(--green-deep);margin-bottom:8px}
+.db-desc{font-size:0.8rem;color:var(--text-soft);line-height:1.7}
+
+/* ═══════════════════════════════════════════
+   4. PREVIOUS STUDIES
+═══════════════════════════════════════════ */
+#s-prev{background:white}
+.prev-cats{display:flex;gap:12px;margin-bottom:40px;flex-wrap:wrap}
+.pcat-btn{
+  padding:9px 20px;border-radius:100px;font-size:0.84rem;
+  font-family:var(--font-b);font-weight:600;cursor:pointer;
+  border:1.5px solid var(--border);color:var(--text-soft);
+  background:transparent;transition:all 0.25s;
+}
+.pcat-btn.on{
+  background:var(--green-deep);color:white;border-color:var(--green-deep);
+}
+.studies-list{display:flex;flex-direction:column;gap:20px}
+.study-card{
+  background:var(--cream);border:1px solid var(--border);border-radius:var(--r);
+  padding:28px 32px;transition:all 0.3s;display:none;
+}
+.study-card.show{display:block}
+.study-card:hover{box-shadow:var(--shadow-hover);border-color:var(--green-light)}
+.sc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:12px}
+.sc-author{font-family:var(--font-h);font-size:0.95rem;font-weight:700;color:var(--green-deep)}
+.sc-year{
+  background:rgba(13,59,46,0.07);border-radius:8px;padding:4px 12px;
+  font-size:0.76rem;font-weight:600;color:var(--green-mid);white-space:nowrap;
+}
+.sc-body{font-size:0.87rem;color:var(--text-mid);line-height:1.85}
+.sc-tag{
+  display:inline-block;margin-top:12px;
+  background:rgba(82,183,136,0.1);border:1px solid rgba(82,183,136,0.2);
+  color:var(--green-bright);font-size:0.73rem;font-weight:600;
+  padding:3px 10px;border-radius:100px;font-family:var(--font-b);
+}
+
+/* ═══════════════════════════════════════════
+   5. EXPLORATORY STUDY
+═══════════════════════════════════════════ */
+#s-explore{background:var(--green-deep);position:relative;overflow:hidden}
+#s-explore .s-tag{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);color:var(--green-pale)}
+#s-explore .s-title{color:white}
+#s-explore .s-lead{color:rgba(255,255,255,0.6)}
+
+.explore-decor{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.edot{position:absolute;border-radius:50%;opacity:0.06;background:radial-gradient(circle,var(--green-light),transparent)}
+.edot-1{width:500px;height:500px;top:-200px;left:-150px}
+.edot-2{width:350px;height:350px;bottom:-100px;right:-80px}
+
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:48px}
+.stat-box{
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  border-radius:var(--r);padding:32px 24px;text-align:center;
+  transition:all 0.3s;
+}
+.stat-box:hover{background:rgba(255,255,255,0.1);transform:translateY(-4px)}
+.sb-ring{width:100px;height:100px;margin:0 auto 20px;position:relative}
+.sb-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:rgba(255,255,255,0.08);stroke-width:7}
+.ring-fg{fill:none;stroke-width:7;stroke-linecap:round;
+  stroke-dasharray:283;stroke-dashoffset:283;
+  transition:stroke-dashoffset 1.6s cubic-bezier(.16,1,.3,1) 0.3s}
+.ring-fg.c-green{stroke:var(--green-light)}
+.ring-fg.c-amber{stroke:var(--amber-light)}
+.ring-fg.c-red{stroke:#f87171}
+.ring-fg.c-blue{stroke:#60a5fa}
+.sb-val{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:var(--font-h);font-size:1.5rem;font-weight:900;color:white;
+}
+.sb-pct{font-size:0.7rem;color:rgba(255,255,255,0.4)}
+.sb-label{font-family:var(--font-h);font-size:0.9rem;font-weight:700;color:white;margin-bottom:8px}
+.sb-desc{font-size:0.78rem;color:rgba(255,255,255,0.5);line-height:1.6}
+.sb-bar{height:3px;background:rgba(255,255,255,0.08);border-radius:2px;margin-top:14px;overflow:hidden}
+.sb-fill{height:100%;border-radius:2px;width:0;transition:width 1.5s cubic-bezier(.16,1,.3,1) 0.5s}
+.sb-fill.c-green{background:linear-gradient(90deg,var(--green-light),var(--green-pale))}
+.sb-fill.c-amber{background:linear-gradient(90deg,var(--amber),var(--amber-light))}
+.sb-fill.c-red{background:linear-gradient(90deg,#f87171,#fca5a5)}
+.sb-fill.c-blue{background:linear-gradient(90deg,#3b82f6,#60a5fa)}
+
+.explore-insight{
+  background:rgba(255,255,255,0.05);border:1px solid rgba(82,183,136,0.25);
+  border-radius:var(--r);padding:32px 40px;
+  display:flex;align-items:flex-start;gap:20px;
+}
+.ei-icon{font-size:2rem;flex-shrink:0}
+.ei-text{font-size:0.97rem;color:rgba(255,255,255,0.8);line-height:1.85}
+.ei-text strong{color:var(--green-pale)}
+
+/* ═══════════════════════════════════════════
+   6. PROBLEM
+═══════════════════════════════════════════ */
+#s-problem{background:var(--sand)}
+.problem-main{
+  background:white;border-radius:var(--r);padding:48px;
+  border-right:5px solid var(--green-mid);
+  box-shadow:var(--shadow-card);margin-bottom:40px;
+}
+.pm-text{font-size:1rem;color:var(--text-mid);line-height:2;margin-bottom:28px}
+.pm-q{
+  background:linear-gradient(135deg,rgba(13,59,46,0.05),rgba(82,183,136,0.08));
+  border-radius:var(--r-sm);padding:28px 32px;
+  border:1px solid rgba(82,183,136,0.2);margin-bottom:24px;
+}
+.pm-qlabel{font-size:0.76rem;font-weight:700;color:var(--green-bright);letter-spacing:0.08em;margin-bottom:10px;font-family:var(--font-b)}
+.pm-qtext{font-family:var(--font-h);font-size:1.1rem;font-weight:700;color:var(--green-deep);line-height:1.6}
+
+.sub-qs{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.sq-item{
+  background:var(--cream);border:1px solid var(--border);
+  border-radius:var(--r-sm);padding:20px 24px;
+  display:flex;gap:14px;align-items:flex-start;
+  transition:all 0.3s;
+}
+.sq-item:hover{border-color:var(--green-light);transform:translateX(-3px)}
+.sq-num{
+  font-family:var(--font-h);font-size:1.3rem;font-weight:900;
+  color:rgba(13,59,46,0.15);flex-shrink:0;line-height:1;padding-top:4px;
+}
+.sq-text{font-size:0.86rem;color:var(--text-mid);line-height:1.7}
+
+/* ═══════════════════════════════════════════
+   7. IMPORTANCE
+═══════════════════════════════════════════ */
+#s-importance{background:white}
+.imp-cols{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.imp-col{border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-card)}
+.imp-col-head{padding:28px 32px}
+.imp-col-head.sci{background:var(--green-deep)}
+.imp-col-head.prac{background:linear-gradient(135deg,#1a5c44,#2d8c60)}
+.ich-tag{font-size:0.72rem;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:0.1em;margin-bottom:8px}
+.ich-title{font-family:var(--font-h);font-size:1.2rem;font-weight:800;color:white}
+.imp-items{background:var(--cream);border:1px solid var(--border);border-top:none;padding:28px 32px}
+.imp-item{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:16px 0;border-bottom:1px solid var(--border);
+}
+.imp-item:last-child{border-bottom:none;padding-bottom:0}
+.ii-dot{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--green-mid),var(--green-bright));
+  display:flex;align-items:center;justify-content:center;
+  color:white;font-size:0.8rem;font-weight:700;font-family:var(--font-h);
+  margin-top:2px;
+}
+.ii-text{font-size:0.87rem;color:var(--text-mid);line-height:1.75}
+
+/* ═══════════════════════════════════════════
+   8. OBJECTIVES
+═══════════════════════════════════════════ */
+#s-objectives{background:var(--sand)}
+.obj-list{display:flex;flex-direction:column;gap:16px}
+.obj-item{
+  background:white;border-radius:var(--r);
+  border:1px solid var(--border);padding:24px 32px;
+  display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;
+  box-shadow:var(--shadow-card);transition:all 0.3s;
+}
+.obj-item:hover{border-color:var(--green-light);transform:translateX(-5px);box-shadow:var(--shadow-hover)}
+.obj-num{
+  font-family:var(--font-h);font-size:2.2rem;font-weight:900;
+  color:var(--green-pale);line-height:1;
+}
+.obj-title{font-family:var(--font-h);font-size:1rem;font-weight:700;color:var(--green-deep);margin-bottom:6px}
+.obj-desc{font-size:0.87rem;color:var(--text-soft);line-height:1.7}
+
+/* ═══════════════════════════════════════════
+   9. HYPOTHESES
+═══════════════════════════════════════════ */
+#s-hypo{background:white}
+.hypo-model{
+  background:linear-gradient(160deg,rgba(13,59,46,0.03),rgba(82,183,136,0.06));
+  border:1px solid var(--border);border-radius:var(--r);padding:48px;
+  margin-bottom:48px;
+}
+.hm-grid{display:grid;grid-template-columns:1fr 80px 1fr;gap:24px;align-items:center}
+.hm-block{border-radius:var(--r-sm);padding:24px}
+.hm-ind{background:rgba(13,59,46,0.05);border:1.5px solid rgba(13,59,46,0.12)}
+.hm-dep{background:rgba(82,183,136,0.07);border:1.5px solid rgba(82,183,136,0.2)}
+.hm-label{font-size:0.72rem;font-weight:700;color:var(--text-muted);letter-spacing:0.08em;margin-bottom:10px;font-family:var(--font-b)}
+.hm-title{font-family:var(--font-h);font-size:1rem;font-weight:800;color:var(--green-deep);margin-bottom:16px}
+.hm-dims{display:flex;flex-direction:column;gap:8px}
+.hm-dim{
+  background:white;border-radius:8px;padding:9px 14px;
+  font-size:0.82rem;font-family:var(--font-b);font-weight:600;
+  color:var(--text-mid);
+  border-right:3px solid var(--c,var(--green-light));
+}
+.hm-center{display:flex;flex-direction:column;align-items:center;gap:6px}
+.hm-arrow{font-size:2rem;color:var(--green-light)}
+.hm-codes{display:flex;flex-direction:column;align-items:center;gap:3px}
+.hc{font-size:0.7rem;font-weight:700;color:var(--text-muted)}
+
+.hyps{display:flex;flex-direction:column;gap:0}
+.hyp{
+  display:grid;grid-template-columns:60px 1fr;gap:20px;
+  align-items:start;padding:20px 24px;
+  border-bottom:1px solid var(--border);
+  transition:all 0.3s;border-radius:var(--r-sm);
+}
+.hyp:hover{background:rgba(13,59,46,0.03)}
+.hyp-code{
+  font-family:var(--font-h);font-size:1.1rem;font-weight:900;
+  color:var(--green-bright);line-height:1;padding-top:4px;
+}
+.hyp-text{font-size:0.9rem;color:var(--text-mid);line-height:1.8}
+.hyp-text strong{color:var(--green-deep)}
+.hyp-sub{display:flex;flex-direction:column;gap:10px;margin-top:12px;padding-right:16px;border-right:2px solid var(--border)}
+.hyp-sub-item{font-size:0.83rem;color:var(--text-soft);display:flex;gap:10px;line-height:1.65}
+.hs-code{color:var(--green-bright);font-weight:700;flex-shrink:0;font-family:var(--font-h)}
+
+/* ═══════════════════════════════════════════
+   10. VARIABLES
+═══════════════════════════════════════════ */
+#s-vars{background:var(--sand)}
+.vars-layout{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-bottom:40px}
+.var-col{border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-card)}
+.vc-head{padding:24px 28px}
+.vc-head.ind{background:var(--green-deep)}
+.vc-head.dep{background:linear-gradient(135deg,#1a5c44,#2d8c60)}
+.vc-head.dem{background:linear-gradient(135deg,#2d6a4f,#52b788)}
+.vc-tag{font-size:0.68rem;font-weight:700;color:rgba(255,255,255,0.45);letter-spacing:0.1em;margin-bottom:6px}
+.vc-title{font-family:var(--font-h);font-size:0.95rem;font-weight:800;color:white}
+.vc-body{background:white;border:1px solid var(--border);border-top:none;padding:20px 28px}
+.var-dim{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 0;border-bottom:1px solid var(--border);font-size:0.85rem;color:var(--text-mid);
+}
+.var-dim:last-child{border-bottom:none;padding-bottom:0}
+.vd-dot{width:8px;height:8px;border-radius:50%;background:var(--c,var(--green-light));flex-shrink:0}
+
+.measure-table{
+  background:white;border-radius:var(--r);
+  border:1px solid var(--border);overflow:hidden;
+  box-shadow:var(--shadow-card);
+}
+.mt-title{
+  padding:20px 28px;
+  background:linear-gradient(135deg,rgba(13,59,46,0.04),rgba(82,183,136,0.06));
+  border-bottom:1px solid var(--border);
+  font-family:var(--font-h);font-size:1rem;font-weight:700;color:var(--green-deep);
+}
+table{width:100%;border-collapse:collapse}
+th,td{padding:14px 24px;text-align:right;font-size:0.84rem}
+th{
+  background:rgba(13,59,46,0.04);font-family:var(--font-h);
+  font-weight:700;color:var(--green-deep);border-bottom:1px solid var(--border);
+}
+tr:not(:last-child) td{border-bottom:1px solid rgba(13,59,46,0.05)}
+tr:hover td{background:rgba(13,59,46,0.02)}
+td:last-child{color:var(--text-soft);font-size:0.8rem}
+
+/* ═══════════════════════════════════════════
+   11. METHODOLOGY
+═══════════════════════════════════════════ */
+#s-method{background:white}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:48px}
+.method-card{
+  background:var(--cream);border:1px solid var(--border);
+  border-radius:var(--r);padding:36px;
+  box-shadow:var(--shadow-card);transition:all 0.3s;
+}
+.method-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-4px)}
+.mc-icon{font-size:2rem;margin-bottom:16px}
+.mc-title{font-family:var(--font-h);font-size:1.1rem;font-weight:800;color:var(--green-deep);margin-bottom:14px}
+.mc-text{font-size:0.88rem;color:var(--text-mid);line-height:1.85}
+.mc-highlight{
+  background:rgba(13,59,46,0.05);border-radius:10px;
+  padding:14px 18px;margin-top:14px;
+  font-family:var(--font-h);font-size:1rem;font-weight:700;color:var(--green-mid);
+  display:flex;align-items:center;gap:8px;
+}
+
+.sample-dist{margin-top:24px;display:flex;flex-direction:column;gap:10px}
+.sd-row{display:flex;align-items:center;gap:12px}
+.sd-label{font-size:0.82rem;color:var(--text-soft);width:100px;flex-shrink:0}
+.sd-track{flex:1;height:32px;background:rgba(13,59,46,0.06);border-radius:8px;overflow:hidden}
+.sd-fill{height:100%;border-radius:8px;display:flex;align-items:center;padding:0 12px;
+  font-size:0.78rem;font-weight:700;color:white;font-family:var(--font-h);
+  width:0;transition:width 1.2s cubic-bezier(.16,1,.3,1);
+}
+.sd-n{font-size:0.8rem;font-weight:700;color:var(--green-deep);width:60px;text-align:left;flex-shrink:0}
+
+.stats-methods{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.sm-card{
+  background:var(--cream);border:1px solid var(--border);
+  border-radius:var(--r-sm);padding:24px;box-shadow:var(--shadow-card);
+  transition:all 0.3s;
+}
+.sm-card:hover{border-color:var(--green-light);transform:translateY(-3px)}
+.sm-head{font-family:var(--font-h);font-size:0.88rem;font-weight:700;color:var(--green-deep);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.sm-item{display:flex;align-items:center;gap:8px;font-size:0.81rem;color:var(--text-soft);padding:5px 0}
+.sm-item::before{content:'›';color:var(--green-bright);font-weight:700;flex-shrink:0}
+
+/* ═══════════════════════════════════════════
+   12. SCOPE (LIMITS)
+═══════════════════════════════════════════ */
+#s-scope{background:var(--sand)}
+.scope-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.scope-card{
+  background:white;border-radius:var(--r);padding:36px;
+  box-shadow:var(--shadow-card);border:1px solid var(--border);
+  transition:all 0.3s;
+}
+.scope-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.sco-icon{font-size:2.2rem;margin-bottom:16px}
+.sco-type{font-size:0.72rem;font-weight:700;color:var(--green-bright);letter-spacing:0.1em;margin-bottom:8px;font-family:var(--font-b)}
+.sco-title{font-family:var(--font-h);font-size:1.05rem;font-weight:800;color:var(--green-deep);margin-bottom:12px}
+.sco-text{font-size:0.87rem;color:var(--text-mid);line-height:1.85}
+.sco-badge{
+  display:inline-flex;align-items:center;gap:6px;margin-top:14px;
+  background:rgba(13,59,46,0.07);border-radius:8px;
+  padding:7px 14px;font-size:0.78rem;font-weight:600;color:var(--green-mid);font-family:var(--font-b);
+}
+
+/* ═══════════════════════════════════════════
+   13. STRUCTURE
+═══════════════════════════════════════════ */
+#s-structure{background:white}
+.chapters{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.chapter{
+  background:var(--cream);border:1px solid var(--border);
+  border-radius:var(--r);padding:28px 22px;text-align:center;
+  transition:all 0.3s;box-shadow:var(--shadow-card);
+  position:relative;overflow:hidden;
+}
+.chapter::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;
+  height:3px;background:linear-gradient(90deg,var(--green-mid),var(--green-light));
+  transform:scaleX(0);transform-origin:right;transition:transform 0.4s;
+}
+.chapter:hover::before{transform:scaleX(1)}
+.chapter:hover{transform:translateY(-5px);box-shadow:var(--shadow-hover)}
+.ch-circle{
+  width:60px;height:60px;border-radius:50%;margin:0 auto 16px;
+  background:linear-gradient(135deg,var(--green-deep),var(--green-mid));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-h);font-size:1.4rem;font-weight:900;color:white;
+  box-shadow:0 8px 20px rgba(13,59,46,0.25);
+}
+.ch-title{font-family:var(--font-h);font-size:0.95rem;font-weight:800;color:var(--green-deep);margin-bottom:10px}
+.ch-items{display:flex;flex-direction:column;gap:5px}
+.ch-item{font-size:0.76rem;color:var(--text-soft);padding:4px 0;border-bottom:1px solid var(--border)}
+.ch-item:last-child{border-bottom:none}
+
+/* ═══════════════════════════════════════════
+   14. REFERENCES
+═══════════════════════════════════════════ */
+#s-refs{background:var(--green-deep);position:relative;overflow:hidden}
+#s-refs .s-tag{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);color:var(--green-pale)}
+#s-refs .s-title{color:white}
+.refs-decor{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.rdot{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(82,183,136,0.08),transparent)}
+.rdot-1{width:400px;height:400px;top:-100px;right:-100px}
+.rdot-2{width:300px;height:300px;bottom:-80px;left:-60px}
+
+.refs-tabs{display:flex;gap:12px;margin-bottom:36px}
+.ref-tab{
+  padding:9px 22px;border-radius:100px;
+  font-size:0.83rem;font-family:var(--font-b);font-weight:600;cursor:pointer;
+  border:1.5px solid rgba(255,255,255,0.15);
+  color:rgba(255,255,255,0.5);background:transparent;transition:all 0.25s;
+}
+.ref-tab.on{background:rgba(255,255,255,0.1);color:white;border-color:rgba(255,255,255,0.3)}
+
+.refs-list{display:flex;flex-direction:column;gap:0;display:none}
+.refs-list.show{display:flex}
+.ref-item{
+  padding:18px 24px;border-bottom:1px solid rgba(255,255,255,0.06);
+  display:flex;gap:16px;align-items:flex-start;
+  transition:background 0.2s;
+}
+.ref-item:hover{background:rgba(255,255,255,0.03)}
+.ref-item:last-child{border-bottom:none}
+.ri-num{
+  font-family:var(--font-h);font-size:0.8rem;font-weight:700;
+  color:rgba(255,255,255,0.2);flex-shrink:0;min-width:28px;padding-top:3px;
+}
+.ri-text{font-size:0.83rem;color:rgba(255,255,255,0.6);line-height:1.7;direction:rtl}
+.ri-text em{color:rgba(255,255,255,0.85);font-style:normal;font-weight:600}
+.ri-text span.journal{color:var(--green-pale)}
+
+/* Footer strip inside refs */
+.refs-footer{
+  margin-top:64px;padding-top:40px;
+  border-top:1px solid rgba(255,255,255,0.08);
+  display:grid;grid-template-columns:repeat(4,1fr);gap:32px;
+}
+.rf-col h5{font-family:var(--font-h);font-size:0.85rem;font-weight:700;color:rgba(255,255,255,0.6);margin-bottom:12px}
+.rf-col p{font-size:0.78rem;color:rgba(255,255,255,0.3);line-height:1.7}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media(max-width:1100px){
+  .dims-grid{grid-template-columns:repeat(2,1fr)}
+  .chapters{grid-template-columns:repeat(3,1fr)}
+  .stats-methods{grid-template-columns:repeat(2,1fr)}
+  .hm-grid{grid-template-columns:1fr}
+  .hm-center{flex-direction:row;justify-content:center;padding:12px 0}
+  .hm-arrow{transform:rotate(90deg)}
+}
+@media(max-width:900px){
+  .page-wrap{grid-template-columns:1fr}
+  .sidebar{display:none;position:fixed;top:0;bottom:0;right:0;width:280px}
+  .sidebar.open{display:flex}
+  .mob-toggle{display:flex;align-items:center;justify-content:center}
+  .section{padding:60px 28px}
+  .cover-content{padding:80px 28px}
+  .intro-grid,.imp-cols,.sub-qs,.vars-layout,.scope-grid,.method-grid{grid-template-columns:1fr}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .dims-grid{grid-template-columns:1fr 1fr}
+  .terms-grid{grid-template-columns:1fr}
+  .chapters{grid-template-columns:repeat(2,1fr)}
+  .refs-footer{grid-template-columns:1fr 1fr;gap:20px}
+}
+@media(max-width:560px){
+  .stats-row{grid-template-columns:1fr}
+  .dims-grid{grid-template-columns:1fr}
+  .chapters{grid-template-columns:1fr}
+  .refs-footer{grid-template-columns:1fr}
+  .stats-methods{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+<!-- ═══════════════════════════════
+     SIDEBAR NAVIGATION
+════════════════════════════════= -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">
+      <div class="logo-ring">🎓</div>
+      <div class="logo-text">مقترح بحث تكميلي<br/>2026</div>
+    </div>
+    <div class="sidebar-sub">جامعة بورسعيد · كلية التجارة</div>
+  </div>
+  <ul class="nav-list">
+    <li class="nav-item"><a class="nav-link active" href="#s-cover" onclick="setActive(this)"><span class="nav-icon">🏠</span>الغلاف<span class="nav-num">00</span></a></li>
+    <li class="nav-item"><a class="nav-link" href="#s-intro" onclick="setActive(this)"><span class="nav-icon">📖</span>المقدمة<span class="nav-num">01</span></a></li>
+    <li class="nav-item"><a class="nav-link" href="#s-terms" onclick="setActive(this)"><span class="nav-icon">📚</span>المصطلحات<span class="nav-num">02</span></a></li>
+    <li class="nav-item"><a class="nav-link" href="#s-prev" onclick="setActive(this)"><span class="nav-icon">🔬</span>الدراسات السابقة<span class="nav-num">03</span></a></li>
+    <li class="nav-item"><a class="nav-link" href="#s-explore" onclick="setActive(this)"><span class="nav-icon">📊</span>الدراسة الاستطلاعية<span class="nav-num">04</span></a></li>
+    <li class="nav-item"><a class="nav-link" href="#s-problem" onclick="setActive(this)"><span class="nav-icon">❓</span>مشكلة الدراسة<span class="nav-num">05</span></a></li>
+    <li class="nav-item"><a class="nav-link" href="#s-importance" onclick="setActive(this)"><span class="nav-icon">⭐</span>أهمية الدراسة<span class="nav-num">06</span></a></li>
+    <li class="nav-item"><a class="nav-link" href="#s-objectives" onclick="setActive(this)"><span class="nav-icon">🎯</span>أهداف الدراسة<span class="nav-num">07</span></a></li>
+    <li class="nav-item"><a class="nav-link" href="#s-hypo" onclick="setActive(this)"><span class="nav-icon">🧪</span>فروض الدراسة<span class="nav-num">08</span></a></li>
+    <li class="nav-item"><a class="nav-link" href="#s-vars" onclick="setActive(this)"><span class="nav-icon">🔗</span>متغيرات الدراسة<span class="nav-num">09</span></a></li>
+    <li class="nav-item"><a class="nav-link" href="#s-method" onclick="setActive(this)"><span class="nav-icon">⚙️</span>منهجية الدراسة<span class="nav-num">10</span></a></li>
+    <li class="nav-item"><a class="nav-link" href="#s-scope" onclick="setActive(this)"><span class="nav-icon">📍</span>حدود الدراسة<span class="nav-num">11</span></a></li>
+    <li class="nav-item"><a class="nav-link" href="#s-structure" onclick="setActive(this)"><span class="nav-icon">🗂️</span>هيكل الدراسة<span class="nav-num">12</span></a></li>
+    <li class="nav-item"><a class="nav-link" href="#s-refs" onclick="setActive(this)"><span class="nav-icon">📑</span>المراجع<span class="nav-num">13</span></a></li>
+  </ul>
+  <div class="sidebar-footer">
+    <div>الباحث: سالم محمد فزاع سالم</div>
+    <div>عينة: ٣٨٤ عضو هيئة تدريس</div>
+  </div>
+</aside>
+
+<!-- ═══════════════════════════════
+     MAIN CONTENT
+════════════════════════════════= -->
+<main class="main">
+
+<!-- ── 00 COVER ─────────────────────────── -->
+<section class="section" id="s-cover" style="padding:0;border:none">
+  <div class="cover-decor">
+    <div class="grid-lines"></div>
+    <div class="cdot cdot-1"></div>
+    <div class="cdot cdot-2"></div>
+    <div class="cdot cdot-3"></div>
+  </div>
+  <div class="cover-content">
+    <div class="cover-badge"><span class="badge-pulse"></span>مقترح بحث تكميلي · 2026</div>
+    <div class="cover-uni">جامعة بورسعيد — كلية التجارة</div>
+    <h1 class="cover-h1">تأثير قبول <em>أعضاء هيئة التدريس</em><br/>لاستخدام الذكاء الاصطناعي</h1>
+    <h2 class="cover-h2">على تبني ممارسات التعليم الرقمي<br/>بالتطبيق على الجامعات المصرية</h2>
+    <div class="cover-meta">
+      <div class="cm-item"><span class="cm-icon">👨‍🏫</span><div class="cm-info"><span class="cm-label">الباحث</span><span class="cm-val">سالم محمد فزاع سالم</span></div></div>
+      <div class="cm-item"><span class="cm-icon">🏛️</span><div class="cm-info"><span class="cm-label">الجامعات</span><span class="cm-val">القاهرة · عين شمس · الإسكندرية</span></div></div>
+      <div class="cm-item"><span class="cm-icon">👥</span><div class="cm-info"><span class="cm-label">حجم العينة</span><span class="cm-val">٣٨٤ عضو هيئة تدريس</span></div></div>
+      <div class="cm-item"><span class="cm-icon">📅</span><div class="cm-info"><span class="cm-label">الفترة</span><span class="cm-val">أكتوبر ٢٠٢٥ — فبراير ٢٠٢٦</span></div></div>
+    </div>
+    <div class="toc-preview">
+      <span class="toc-chip" onclick="scrollTo('s-intro')">المقدمة</span>
+      <span class="toc-chip" onclick="scrollTo('s-terms')">المصطلحات</span>
+      <span class="toc-chip" onclick="scrollTo('s-prev')">الدراسات السابقة</span>
+      <span class="toc-chip" onclick="scrollTo('s-explore')">الدراسة الاستطلاعية</span>
+      <span class="toc-chip" onclick="scrollTo('s-problem')">المشكلة</span>
+      <span class="toc-chip" onclick="scrollTo('s-importance')">الأهمية</span>
+      <span class="toc-chip" onclick="scrollTo('s-objectives')">الأهداف</span>
+      <span class="toc-chip" onclick="scrollTo('s-hypo')">الفروض</span>
+      <span class="toc-chip" onclick="scrollTo('s-vars')">المتغيرات</span>
+      <span class="toc-chip" onclick="scrollTo('s-method')">المنهجية</span>
+      <span class="toc-chip" onclick="scrollTo('s-scope')">الحدود</span>
+      <span class="toc-chip" onclick="scrollTo('s-structure')">الهيكل</span>
+      <span class="toc-chip" onclick="scrollTo('s-refs')">المراجع</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── 01 INTRO ─────────────────────────── -->
+<section class="section" id="s-intro">
+  <div class="s-tag">01 · المقدمة</div>
+  <h2 class="s-title">السياق والخلفية البحثية</h2>
+  <p class="s-lead">شهد قطاع التعليم العالي تحولات جذرية متسارعة في ضوء الثورة الرقمية العالمية، حيث أصبح الذكاء الاصطناعي في مقدمة التقنيات التي تعيد تشكيل منظومة التدريس والتعلم داخل الجامعات.</p>
+
+  <div class="intro-grid">
+    <div class="intro-card reveal" data-d="1">
+      <div class="ic-num">01</div>
+      <div class="ic-title">الذكاء الاصطناعي والتحول التعليمي</div>
+      <div class="ic-body">أسهم الذكاء الاصطناعي في إحداث نقلة نوعية في ممارسات التعليم الرقمي، من خلال أنظمة التعلم الذكية، والتقييم الآلي، وتحليل بيانات المتعلمين، والمساعدات التعليمية الذكية. مما يعزز كفاءة العملية التعليمية ومرونتها في مؤسسات التعليم العالي.</div>
+    </div>
+    <div class="intro-card reveal" data-d="2">
+      <div class="ic-num">02</div>
+      <div class="ic-title">العامل البشري — المحور الحاسم</div>
+      <div class="ic-body">نجاح توظيف التقنيات لا يعتمد فقط على توافر البنية التكنولوجية، بل يرتبط بدرجة كبيرة بمستوى قبول المستخدمين لها. وعلى رأسهم أعضاء هيئة التدريس، باعتبارهم الفاعل الرئيسي في تنفيذ العملية التعليمية.</div>
+    </div>
+    <div class="intro-card reveal" data-d="3">
+      <div class="ic-num">03</div>
+      <div class="ic-title">نماذج القبول التكنولوجي</div>
+      <div class="ic-body">تؤكد نماذج TAM و UTAUT أن نية الأفراد لاستخدام التقنيات الحديثة تتأثر بإدراكهم لفائدتها وسهولة استخدامها، إضافةً إلى العوامل التنظيمية والاجتماعية المحيطة بهم.</div>
+    </div>
+    <div class="intro-card reveal" data-d="4">
+      <div class="ic-num">04</div>
+      <div class="ic-title">الفجوة في البيئة العربية</div>
+      <div class="ic-body">على الرغم من تزايد الاهتمام العالمي بدراسة الذكاء الاصطناعي في التعليم، لا تزال الدراسات العربية والمصرية تعاني من محدودية في تناول تأثير قبول هيئة التدريس على تبني ممارسات التعليم الرقمي.</div>
+    </div>
+  </div>
+
+  <div class="intro-quote reveal">
+    <div class="iq-mark">"</div>
+    <div class="iq-text">قبول أعضاء هيئة التدريس لاستخدام الذكاء الاصطناعي يمثل عاملاً حاسماً في تبني ممارسات التعليم الرقمي وتكاملها داخل البيئة الجامعية، وهذا ما تسعى الدراسة الحالية إلى قياسه وتحليله بصورة منهجية في السياق المصري.</div>
+    <div class="iq-models">
+      <span class="iq-model">TAM — نموذج قبول التكنولوجيا</span>
+      <span class="iq-model">UTAUT — النموذج الموحد للقبول والاستخدام</span>
+      <span class="iq-model">جامعات مصرية حكومية</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── 02 TERMS ─────────────────────────── -->
+<section class="section" id="s-terms">
+  <div class="s-tag">02 · مصطلحات الدراسة</div>
+  <h2 class="s-title">التعريفات الإجرائية للمفاهيم الجوهرية</h2>
+  <p class="s-lead">يتناول هذا القسم المصطلحات التقنية الأساسية للمتغيرين المستقل والتابع، مع توضيح الأبعاد الفرعية لكل منهما.</p>
+
+  <div class="terms-grid">
+    <div class="term-card reveal" data-d="1">
+      <div class="term-header">
+        <div class="term-icon g1">🤖</div>
+        <div>
+          <span class="term-en">Artificial Intelligence Acceptance</span>
+          <span class="term-ar">قبول استخدام الذكاء الاصطناعي</span>
+        </div>
+      </div>
+      <div class="term-body">
+        <p class="term-def">درجة استعداد الأفراد ورغبتهم في تبني واستخدام تطبيقات وتقنيات الذكاء الاصطناعي في أداء مهامهم الوظيفية، اعتماداً على إدراكهم للفائدة المتوقعة وسهولة الاستخدام ومدى توافقها مع متطلبات العمل، إضافةً إلى العوامل التنظيمية والاجتماعية الداعمة للاستخدام.<br/><br/><strong>إجرائياً:</strong> مدى تقبل أعضاء هيئة التدريس لتوظيف تطبيقات الذكاء الاصطناعي في العملية التعليمية بما يسهم في تحسين جودة التدريس.</p>
+        <div class="term-dims">
+          <span class="tdim">الفائدة المدركة</span>
+          <span class="tdim">سهولة الاستخدام</span>
+          <span class="tdim">النية السلوكية</span>
+          <span class="tdim">الدعم المؤسسي</span>
+        </div>
+      </div>
+    </div>
+    <div class="term-card reveal" data-d="2">
+      <div class="term-header">
+        <div class="term-icon g2">📱</div>
+        <div>
+          <span class="term-en">Adoption of Digital Education Practices</span>
+          <span class="term-ar">تبني ممارسات التعليم الرقمي</span>
+        </div>
+      </div>
+      <div class="term-body">
+        <p class="term-def">العملية التي يتم من خلالها دمج وتوظيف التقنيات الرقمية ونظم التعلم الإلكتروني والذكية في تصميم وتنفيذ وتقويم العملية التعليمية، بما يُسهم في تحسين جودة التعليم وتعزيز التفاعل ورفع كفاءة مخرجات التعلم.<br/><br/><strong>إجرائياً:</strong> مدى التزام أعضاء هيئة التدريس بتوظيف التقنيات الرقمية في أنشطة التدريس والتعلم كمؤشر على نجاح التحول الرقمي.</p>
+        <div class="term-dims">
+          <span class="tdim">المنصات الرقمية</span>
+          <span class="tdim">أدوات التعليم الذكي</span>
+          <span class="tdim">التقييم الإلكتروني</span>
+          <span class="tdim">التفاعل الرقمي</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dims-section">
+    <div class="dims-title reveal">أبعاد المتغير المستقل — قبول الذكاء الاصطناعي</div>
+    <div class="dims-grid">
+      <div class="dim-block reveal" data-d="1" style="--c:#2d8c60">
+        <div class="db-icon">💡</div>
+        <div class="db-name">الفائدة المدركة<br/><em style="font-size:0.72rem;color:var(--text-muted);font-style:normal">Perceived Usefulness</em></div>
+        <div class="db-desc">الدرجة التي يعتقد فيها عضو هيئة التدريس أن استخدام التقنية سيسهم في تحسين أدائه الوظيفي وزيادة كفاءته وفعاليته في إنجاز المهام.</div>
+      </div>
+      <div class="dim-block reveal" data-d="2" style="--c:#52b788">
+        <div class="db-icon">🖱️</div>
+        <div class="db-name">سهولة الاستخدام المدركة<br/><em style="font-size:0.72rem;color:var(--text-muted);font-style:normal">Perceived Ease of Use</em></div>
+        <div class="db-desc">مدى اعتقاد أعضاء هيئة التدريس بأن تطبيقات الذكاء الاصطناعي سهلة الفهم والتوظيف في العملية التعليمية ولا تتطلب مهارات تقنية معقدة.</div>
+      </div>
+      <div class="dim-block reveal" data-d="3" style="--c:#c9a227">
+        <div class="db-icon">🎯</div>
+        <div class="db-name">النية السلوكية للاستخدام<br/><em style="font-size:0.72rem;color:var(--text-muted);font-style:normal">Behavioral Intention to Use</em></div>
+        <div class="db-desc">مدى رغبة أعضاء هيئة التدريس واستعدادهم لتوظيف تطبيقات الذكاء الاصطناعي في العملية التعليمية حاضراً ومستقبلاً، بما يشمل التخطيط للاستمرار.</div>
+      </div>
+      <div class="dim-block reveal" data-d="4" style="--c:#1a5c44">
+        <div class="db-icon">🏛️</div>
+        <div class="db-name">الدعم المؤسسي المدرك<br/><em style="font-size:0.72rem;color:var(--text-muted);font-style:normal">Perceived Institutional Support</em></div>
+        <div class="db-desc">مدى إدراك أعضاء هيئة التدريس لحرص الجامعة على تهيئة بيئة تعليمية داعمة من خلال البنية التحتية والتدريب والدعم الفني والسياسات.</div>
+      </div>
+    </div>
+
+    <div class="dims-title reveal" style="margin-top:40px">أبعاد المتغير التابع — ممارسات التعليم الرقمي</div>
+    <div class="dims-grid">
+      <div class="dim-block reveal" data-d="1" style="--c:#3b82f6">
+        <div class="db-icon">🖥️</div>
+        <div class="db-name">استخدام المنصات الرقمية<br/><em style="font-size:0.72rem;color:var(--text-muted);font-style:normal">Using Digital Platforms</em></div>
+        <div class="db-desc">توظيف البيئات الإلكترونية المتكاملة (LMS) والتطبيقات السحابية لإدارة المحتوى التعليمي وتنظيم الأنشطة ومتابعة تقدم المتعلمين.</div>
+      </div>
+      <div class="dim-block reveal" data-d="2" style="--c:#8b5cf6">
+        <div class="db-icon">🧠</div>
+        <div class="db-name">توظيف أدوات التعليم الذكي<br/><em style="font-size:0.72rem;color:var(--text-muted);font-style:normal">Smart Learning Tools</em></div>
+        <div class="db-desc">استخدام تقنيات متقدمة قائمة على الذكاء الاصطناعي والتعلم التكيّفي لتخصيص الخبرات التعليمية وفق احتياجات المتعلمين وقدراتهم الفردية.</div>
+      </div>
+      <div class="dim-block reveal" data-d="3" style="--c:#f59e0b">
+        <div class="db-icon">📋</div>
+        <div class="db-name">التقييم الإلكتروني<br/><em style="font-size:0.72rem;color:var(--text-muted);font-style:normal">Electronic Assessment</em></div>
+        <div class="db-desc">استخدام الوسائط الرقمية في تصميم وتنفيذ أدوات قياس الأداء الأكاديمي مع تقديم تغذية راجعة فورية وتحليل إحصائي متقدم للنتائج.</div>
+      </div>
+      <div class="dim-block reveal" data-d="4" style="--c:#ec4899">
+        <div class="db-icon">💬</div>
+        <div class="db-name">التفاعل الرقمي مع الطلاب<br/><em style="font-size:0.72rem;color:var(--text-muted);font-style:normal">Digital Interaction</em></div>
+        <div class="db-desc">توظيف أدوات الاتصال الرقمية لتعزيز المشاركة الفعالة بين المعلم والمتعلمين عبر الفصول الافتراضية والمنتديات النقاشية والدردشة الفورية.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 03 PREV STUDIES ──────────────────── -->
+<section class="section" id="s-prev">
+  <div class="s-tag">03 · الدراسات السابقة</div>
+  <h2 class="s-title">مراجعة الأدبيات العلمية</h2>
+  <p class="s-lead">تم تناول الدراسات السابقة في ثلاثة محاور: قبول الذكاء الاصطناعي، ممارسات التعليم الرقمي، والدراسات الرابطة بينهما — من الأحدث إلى الأقدم.</p>
+
+  <div class="prev-cats reveal">
+    <button class="pcat-btn on" onclick="filterStudies('all',this)">الكل</button>
+    <button class="pcat-btn" onclick="filterStudies('ai',this)">قبول الذكاء الاصطناعي</button>
+    <button class="pcat-btn" onclick="filterStudies('digital',this)">التعليم الرقمي</button>
+    <button class="pcat-btn" onclick="filterStudies('link',this)">دراسات رابطة</button>
+  </div>
+
+  <div class="studies-list" id="studiesList">
+    <!-- AI Acceptance Studies -->
+    <div class="study-card show" data-cat="ai">
+      <div class="sc-top"><span class="sc-author">George &amp; Sevak (2026)</span><span class="sc-year">AI · 2026</span></div>
+      <div class="sc-body">استكشفت الفرص والمخاوف المتعلقة بدمج الذكاء الاصطناعي في التعليم العالي من خلال مقابلات معمقة مع الطلاب والأساتذة وأولياء الأمور وصناع السياسات. كشف التحليل الموضوعي عن مخاوف مشتركة حول الإنصاف والحفاظ على التفاعل البشري واحتمالية فقدان الوظائف والآثار الأخلاقية. أكدت النتائج ضرورة اتباع نهج تعاوني وشفاف يراعي جميع الأطراف المعنية.</div>
+      <span class="sc-tag">مقابلات معمقة · متعدد الأطراف</span>
+    </div>
+    <div class="study-card show" data-cat="ai">
+      <div class="sc-top"><span class="sc-author">Bilgin &amp; Güngören (2025)</span><span class="sc-year">AI · 2025</span></div>
+      <div class="sc-body">استكشفت مستويات قبول تقنيات الذكاء الاصطناعي بين أعضاء هيئة التدريس في الجامعات التركية. أشارت النتائج إلى مستوى عالٍ من القبول العام، مع درجات مرتفعة في سهولة الاستخدام والفائدة المتصوَّرة والاتجاه نحو الاستخدام. وُجد أن العمر ومدة استخدام الذكاء الاصطناعي يؤثران بشكل كبير على مستويات القبول.</div>
+      <span class="sc-tag">جامعات تركية · مسح وصفي · SPSS</span>
+    </div>
+    <div class="study-card show" data-cat="ai">
+      <div class="sc-top"><span class="sc-author">Perez (2024)</span><span class="sc-year">AI · 2024</span></div>
+      <div class="sc-body">استقصت النية السلوكية لأعضاء هيئة التدريس في مؤسسات التعليم العالي نحو تبني تطبيقات الذكاء الاصطناعي بالاعتماد على نموذج UTAUT. توصلت إلى وجود علاقة إيجابية قوية بين النية السلوكية وكل من توقعات الأداء والجهد والتأثير الاجتماعي. التأثير الاجتماعي الناتج عن استخدام الزملاء يُعدّ من أقوى العوامل المحركة.</div>
+      <span class="sc-tag">UTAUT · تعليم عالٍ · منظور تربوي</span>
+    </div>
+    <div class="study-card show" data-cat="ai">
+      <div class="sc-top"><span class="sc-author">القحطاني (2024)</span><span class="sc-year">AI · 2024</span></div>
+      <div class="sc-body">تعرفت على العوامل المؤثرة على استخدام تطبيقات الذكاء الاصطناعي التوليدي (GAI) في التعلم في ضوء نظرية UTAUT من وجهة نظر طلبة جامعة الأمير سطام. أظهرت نتائج الانحدار الخطي وجود تأثير إيجابي دال إحصائياً لمتغيرات نظرية UTAUT على استخدام تطبيقات الذكاء الاصطناعي. متوسط الموافقة الكلي: 4.03.</div>
+      <span class="sc-tag">ذكاء اصطناعي توليدي · UTAUT · سعودية</span>
+    </div>
+    <div class="study-card show" data-cat="ai">
+      <div class="sc-top"><span class="sc-author">Rane et al. (2024)</span><span class="sc-year">AI · 2024</span></div>
+      <div class="sc-body">تناولت العوامل الرئيسية المؤثرة في قبول الذكاء الاصطناعي مع التركيز على الجاهزية التكنولوجية والفائدة المتوقعة وسهولة الاستخدام. استكشفت أهمية الثقة والشفافية وضرورة الذكاء الاصطناعي القابل للتفسير (XAI). أكد البحث على نهج يركز على المستخدم في تصميم أنظمة الذكاء الاصطناعي وتنفيذها.</div>
+      <span class="sc-tag">XAI · ثقة المستخدم · أطر تنظيمية</span>
+    </div>
+    <div class="study-card show" data-cat="ai">
+      <div class="sc-top"><span class="sc-author">عبد القادر (2026)</span><span class="sc-year">AI · 2026</span></div>
+      <div class="sc-body">تعرفت على مدى تقبّل طلاب المرحلة الثانوية لاستخدام تطبيقات الذكاء الاصطناعي كأداة لدعم الصحة النفسية. أظهرت النتائج مستوى تقبّل متوسط إلى مرتفع مع مخاوف واضحة تتعلق بسرية البيانات. اعتمدت المنهج الوصفي التحليلي باستخدام الاستبانة.</div>
+      <span class="sc-tag">صحة نفسية · مرحلة ثانوية · عربي</span>
+    </div>
+    <!-- Digital Education Studies -->
+    <div class="study-card show" data-cat="digital">
+      <div class="sc-top"><span class="sc-author">Jaya (2026)</span><span class="sc-year">رقمي · 2026</span></div>
+      <div class="sc-body">معرفة المهارات الرقمية الأساسية المطلوبة في برنامج تدريب المعلمين بجامعة تيربوكا الإندونيسية. كشفت النتائج عن وجود علاقات وثيقة بين جودة موارد تكنولوجيا المعلومات والتدفق الرقمي ودمج التكنولوجيا. أشارت إلى الحاجة لبرامج محو أمية رقمية ووحدات تدريبية أخلاقية.</div>
+      <span class="sc-tag">مهارات رقمية · تعليم عن بُعد · إندونيسيا</span>
+    </div>
+    <div class="study-card show" data-cat="digital">
+      <div class="sc-top"><span class="sc-author">المبحوح وآخرون (2026)</span><span class="sc-year">رقمي · 2026</span></div>
+      <div class="sc-body">تحليل ممارسات الذكاء الاصطناعي في بناء المحتوى التعليمي الرقمي، واستكشاف توجهات أعضاء هيئة التدريس في الجامعات الفلسطينية. أظهرت ارتفاع نسبة استخدام الذكاء الاصطناعي (91.5%) مع مخاوف حول فقدان الدور الأكاديمي التقليدي وضعف التفكير النقدي.</div>
+      <span class="sc-tag">فلسطين · محتوى رقمي · منهج مختلط</span>
+    </div>
+    <div class="study-card show" data-cat="digital">
+      <div class="sc-top"><span class="sc-author">Adeniyi et al. (2024)</span><span class="sc-year">رقمي · 2024</span></div>
+      <div class="sc-body">تناولت المنصات المتنوعة المستخدمة من أنظمة إدارة التعلم إلى الأدوات المتخصصة. طبّق منظوراً مقارناً لتوضيح أوجه التشابه والاختلاف في تبني التعلم الإلكتروني بين الولايات المتحدة وأفريقيا. كشفت عن دور الذكاء الاصطناعي في معالجة التفاوتات الاجتماعية.</div>
+      <span class="sc-tag">تعلم إلكتروني · مقارن · USA vs أفريقيا</span>
+    </div>
+    <!-- Linking Studies -->
+    <div class="study-card show" data-cat="link">
+      <div class="sc-top"><span class="sc-author">Lindner et al. (2026)</span><span class="sc-year">رابط · 2026</span></div>
+      <div class="sc-body">دراسة تبني الذكاء الاصطناعي التوليدي من قبل معلمي الزراعة في ألاباما. كشفت فجوة تجريبية كبيرة: المعلمون الأحدث (≤5 سنوات) أبدوا مستويات أعلى من الوعي والتفاؤل. العائق الرئيسي كان القلق حول الآثار التربوية والأخلاقية. استندت إلى نظرية انتشار الابتكار ونموذج TAM.</div>
+      <span class="sc-tag">TAM · ذكاء توليدي · تعليم زراعي · أمريكا</span>
+    </div>
+    <div class="study-card show" data-cat="link">
+      <div class="sc-top"><span class="sc-author">الحربي (2025)</span><span class="sc-year">رابط · 2025</span></div>
+      <div class="sc-body">تقييم مستوى استخدام التقنيات الرقمية من قبل أعضاء هيئة التدريس بجامعة طيبة. خلصت إلى مستوى متوسط من اعتماد التقنيات مع تحديات: نقص التدريب وعدم ملاءمة الهياكل التنظيمية. قدمت توصيات للارتقاء بمستوى الاستفادة ومعالجة العوائق.</div>
+      <span class="sc-tag">جامعة طيبة · وصفي تحليلي · سعودية</span>
+    </div>
+    <div class="study-card show" data-cat="link">
+      <div class="sc-top"><span class="sc-author">Gaber et al. (2023)</span><span class="sc-year">رابط · 2023</span></div>
+      <div class="sc-body">دراسة وعي أعضاء هيئة التدريس بالذكاء الاصطناعي وعلاقته بقبول التكنولوجيا والكفاءات الرقمية في جامعة الملك فيصل. أكدت العلاقة الإيجابية بين الوعي بالذكاء الاصطناعي وقبوله. أوضحت أن قبول هيئة التدريس يمثل عاملاً حاسماً في تبني ممارسات التعليم الرقمي.</div>
+      <span class="sc-tag">كفاءات رقمية · جامعة الملك فيصل · قبول+تبني</span>
+    </div>
+  </div>
+
+  <!-- Research Gap Summary -->
+  <div style="margin-top:48px;background:linear-gradient(135deg,rgba(13,59,46,0.04),rgba(82,183,136,0.06));border:1px solid rgba(82,183,136,0.2);border-radius:var(--r);padding:40px" class="reveal">
+    <h3 style="font-family:var(--font-h);font-size:1.2rem;font-weight:800;color:var(--green-deep);margin-bottom:24px">ما تميّزت به الدراسة الحالية عن سابقاتها</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="display:flex;gap:10px;font-size:0.86rem;color:var(--text-mid);line-height:1.7"><span style="color:var(--green-bright);font-weight:700;flex-shrink:0">✓</span>الدمج المباشر لمتغيرات القبول والتبني في نموذج سببي واحد بدلاً من دراستهما منفصلَين</div>
+      <div style="display:flex;gap:10px;font-size:0.86rem;color:var(--text-mid);line-height:1.7"><span style="color:var(--green-bright);font-weight:700;flex-shrink:0">✓</span>التركيز تحديداً على أعضاء هيئة التدريس كفاعلين رئيسيين لا الطلاب أو الإداريين</div>
+      <div style="display:flex;gap:10px;font-size:0.86rem;color:var(--text-mid);line-height:1.7"><span style="color:var(--green-bright);font-weight:700;flex-shrink:0">✓</span>توسيع نموذج TAM بإضافة بُعد الدعم المؤسسي المُدرَك كمتغير تفسيري غائب في معظم الدراسات</div>
+      <div style="display:flex;gap:10px;font-size:0.86rem;color:var(--text-mid);line-height:1.7"><span style="color:var(--green-bright);font-weight:700;flex-shrink:0">✓</span>تميّز بيئي: الجامعات الحكومية المصرية ببحث ميداني كمي منهجي نادر في الأدبيات العربية</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 04 EXPLORATORY ────────────────────── -->
+<section class="section" id="s-explore">
+  <div class="explore-decor"><div class="edot edot-1"></div><div class="edot edot-2"></div></div>
+  <div class="s-tag">04 · الدراسة الاستطلاعية</div>
+  <h2 class="s-title">النتائج الأولية</h2>
+  <p class="s-lead">دراسة استطلاعية على ٣٠ عضو هيئة تدريس من جامعات القاهرة وعين شمس والإسكندرية — لتحديد مشكلة الدراسة وتدعيم فروضها.</p>
+
+  <div class="stats-row">
+    <div class="stat-box reveal" data-d="1">
+      <div class="sb-ring">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" class="ring-bg"/><circle cx="50" cy="50" r="45" class="ring-fg c-green" data-pct="66.7"/></svg>
+        <div class="sb-val" data-target="66.7" data-dec="1">0</div>
+      </div>
+      <div class="sb-label">الفائدة المدركة</div>
+      <div class="sb-desc">اتجاهات إيجابية نحو دور الذكاء الاصطناعي في تحسين جودة التدريس الجامعي</div>
+      <div class="sb-bar"><div class="sb-fill c-green" data-w="66.7"></div></div>
+    </div>
+    <div class="stat-box reveal" data-d="2">
+      <div class="sb-ring">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" class="ring-bg"/><circle cx="50" cy="50" r="45" class="ring-fg c-blue" data-pct="56.7"/></svg>
+        <div class="sb-val" data-target="56.7" data-dec="1">0</div>
+      </div>
+      <div class="sb-label">سهولة الاستخدام والنية</div>
+      <div class="sb-desc">استعداد مبدئي متوسط إلى مرتفع لتوظيف الذكاء الاصطناعي في التعليم</div>
+      <div class="sb-bar"><div class="sb-fill c-blue" data-w="56.7"></div></div>
+    </div>
+    <div class="stat-box reveal" data-d="3">
+      <div class="sb-ring">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" class="ring-bg"/><circle cx="50" cy="50" r="45" class="ring-fg c-red" data-pct="40"/></svg>
+        <div class="sb-val" data-target="40" data-dec="0">0</div>
+      </div>
+      <div class="sb-label">رفض الدعم المؤسسي</div>
+      <div class="sb-desc">قصور واضح في البنية التحتية وبرامج التدريب وسياسات الدعم الرقمي</div>
+      <div class="sb-bar"><div class="sb-fill c-red" data-w="40"></div></div>
+    </div>
+    <div class="stat-box reveal" data-d="4">
+      <div class="sb-ring">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" class="ring-bg"/><circle cx="50" cy="50" r="45" class="ring-fg c-amber" data-pct="46.7"/></svg>
+        <div class="sb-val" data-target="46.7" data-dec="1">0</div>
+      </div>
+      <div class="sb-label">تبني التعليم الرقمي</div>
+      <div class="sb-desc">فجوة كبيرة بين الاتجاهات الإيجابية والتطبيق الفعلي لممارسات التعليم الرقمي</div>
+      <div class="sb-bar"><div class="sb-fill c-amber" data-w="46.7"></div></div>
+    </div>
+  </div>
+
+  <div class="explore-insight reveal">
+    <div class="ei-icon">⚡</div>
+    <div class="ei-text">
+      <strong>الاستنتاج المحوري للدراسة الاستطلاعية:</strong> قبول أعضاء هيئة التدريس لاستخدام الذكاء الاصطناعي لا ينعكس مباشرةً على تبني ممارسات التعليم الرقمي، في ظل محدودية الدعم المؤسسي والتدريب المتخصص. وقد دعمت هذه النتائج مشكلة البحث وأكدت وجود فجوة بحثية حقيقية تستدعي الدراسة الموسعة.
+    </div>
+  </div>
+</section>
+
+<!-- ── 05 PROBLEM ────────────────────────── -->
+<section class="section" id="s-problem">
+  <div class="s-tag">05 · مشكلة الدراسة</div>
+  <h2 class="s-title">تحديد الإشكالية البحثية</h2>
+  <p class="s-lead">في ضوء التحول الرقمي المتسارع، تتجلى الإشكالية في الهوّة بين الاتجاهات الإيجابية نحو الذكاء الاصطناعي والتطبيق الفعلي لممارسات التعليم الرقمي.</p>
+
+  <div class="problem-main reveal">
+    <div class="pm-text">
+      تشير الدراسات الحديثة إلى أن مستوى قبول أعضاء هيئة التدريس لاستخدام الذكاء الاصطناعي يمثل عاملاً حاسماً في نجاح تبني ممارسات التعليم الرقمي، حيث يتأثر هذا القبول بجملة من العوامل المعرفية والتنظيمية والتقنية. ومع ذلك تظهر الملاحظات الميدانية وجود تباين ملحوظ في مستويات قبول أعضاء هيئة التدريس، الأمر الذي ينعكس على درجة تبنيهم لممارسات التعليم الرقمي داخل البيئة الجامعية.
+    </div>
+    <div class="pm-text">
+      وعلى الرغم من تزايد الاهتمام البحثي العالمي، لا تزال الدراسات العربية وبخاصة في الجامعات المصرية محدودة في تناول العلاقة بين قبول أعضاء هيئة التدريس لاستخدام الذكاء الاصطناعي وتبني ممارسات التعليم الرقمي بشكل ميداني ومنهجي.
+    </div>
+    <div class="pm-q">
+      <div class="pm-qlabel">التساؤل الرئيسي</div>
+      <div class="pm-qtext">ما أثر قبول أعضاء هيئة التدريس لاستخدام الذكاء الاصطناعي على تبني ممارسات التعليم الرقمي في الجامعات المصرية؟</div>
+    </div>
+  </div>
+
+  <h3 class="reveal" style="font-family:var(--font-h);font-size:1.1rem;font-weight:800;color:var(--green-deep);margin-bottom:20px">التساؤلات الفرعية</h3>
+  <div class="sub-qs">
+    <div class="sq-item reveal" data-d="1"><span class="sq-num">1</span><span class="sq-text">ما مستوى قبول أعضاء هيئة التدريس بالجامعات المصرية لاستخدام الذكاء الاصطناعي في العملية التعليمية؟</span></div>
+    <div class="sq-item reveal" data-d="2"><span class="sq-num">2</span><span class="sq-text">ما مستوى تبني ممارسات التعليم الرقمي لدى أعضاء هيئة التدريس بالجامعات المصرية؟</span></div>
+    <div class="sq-item reveal" data-d="3"><span class="sq-num">3</span><span class="sq-text">هل توجد علاقة ذات دلالة إحصائية بين قبول الذكاء الاصطناعي وتبني ممارسات التعليم الرقمي؟</span></div>
+    <div class="sq-item reveal" data-d="4"><span class="sq-num">4</span><span class="sq-text">ما مدى تأثير أبعاد قبول الذكاء الاصطناعي (الفائدة المدركة، سهولة الاستخدام، النية السلوكية) على تبني ممارسات التعليم الرقمي؟</span></div>
+    <div class="sq-item reveal" data-d="5"><span class="sq-num">5</span><span class="sq-text">هل تختلف مستويات قبول الذكاء الاصطناعي وتبني التعليم الرقمي باختلاف المتغيرات الديموغرافية (النوع، سنوات الخبرة، التخصص، الدرجة العلمية)؟</span></div>
+  </div>
+</section>
+
+<!-- ── 06 IMPORTANCE ─────────────────────── -->
+<section class="section" id="s-importance">
+  <div class="s-tag">06 · أهمية الدراسة</div>
+  <h2 class="s-title">لماذا هذا البحث ضروري؟</h2>
+  <p class="s-lead">تنبع أهمية الدراسة من الأهمية المتزايدة لتوظيف تقنيات الذكاء الاصطناعي في التعليم العالي، وتتجلى في بُعدين متكاملين: الأهمية العلمية النظرية والأهمية التطبيقية العملية.</p>
+
+  <div class="imp-cols">
+    <div class="imp-col reveal" data-d="1">
+      <div class="imp-col-head sci">
+        <div class="ich-tag">الأهمية العلمية</div>
+        <div class="ich-title">الإسهام النظري والمعرفي</div>
+      </div>
+      <div class="imp-items">
+        <div class="imp-item"><div class="ii-dot">1</div><div class="ii-text">إثراء الأدبيات العلمية العربية في مجال الذكاء الاصطناعي بالتعليم العالي عبر تناول العلاقة بين المتغيرين في البيئة المصرية التي تعاني من ندرة الدراسات الميدانية.</div></div>
+        <div class="imp-item"><div class="ii-dot">2</div><div class="ii-text">تقديم إطار متكامل يستند إلى نماذج TAM و UTAUT، مما يسهم في توسيع نطاق تطبيق هذه النماذج في بيئة التعليم الجامعي العربي.</div></div>
+        <div class="imp-item"><div class="ii-dot">3</div><div class="ii-text">توضيح العوامل المؤثرة في سلوك أعضاء هيئة التدريس تجاه استخدام الذكاء الاصطناعي مما يعزز الفهم العلمي لآليات تبني الابتكارات التكنولوجية.</div></div>
+        <div class="imp-item"><div class="ii-dot">4</div><div class="ii-text">توفير نتائج قابلة للبناء عليها في دراسات مستقبلية لباحثين في الإدارة التعليمية وتكنولوجيا التعليم والتحول الرقمي.</div></div>
+      </div>
+    </div>
+    <div class="imp-col reveal" data-d="2">
+      <div class="imp-col-head prac">
+        <div class="ich-tag">الأهمية التطبيقية</div>
+        <div class="ich-title">الإسهام العملي والميداني</div>
+      </div>
+      <div class="imp-items">
+        <div class="imp-item"><div class="ii-dot">1</div><div class="ii-text">تزويد متخذي القرار في الجامعات المصرية بمؤشرات علمية دقيقة حول مستوى قبول الذكاء الاصطناعي، بما يسهم في صياغة سياسات تعليمية داعمة للتحول الرقمي.</div></div>
+        <div class="imp-item"><div class="ii-dot">2</div><div class="ii-text">توجيه برامج التنمية المهنية والتدريب الأكاديمي لأعضاء هيئة التدريس بما يعزز مهاراتهم الرقمية ويزيد من كفاءة توظيف الذكاء الاصطناعي.</div></div>
+        <div class="imp-item"><div class="ii-dot">3</div><div class="ii-text">تحديد أكثر أبعاد قبول الذكاء الاصطناعي تأثيراً في عملية التبني مما يساعد على توجيه الاستثمارات التقنية بشكل أكثر فاعلية وكفاءة.</div></div>
+        <div class="imp-item"><div class="ii-dot">4</div><div class="ii-text">دعم جهود تحقيق رؤية الدولة المصرية في مجال التحول الرقمي وتطوير التعليم العالي عبر تعزيز الاستخدام المستدام للتقنيات الذكية.</div></div>
+        <div class="imp-item"><div class="ii-dot">5</div><div class="ii-text">توفير أساس عملي لتصميم نماذج تعليمية رقمية مبتكرة قائمة على الذكاء الاصطناعي بما يحسّن جودة مخرجات التعليم الجامعي.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 07 OBJECTIVES ─────────────────────── -->
+<section class="section" id="s-objectives">
+  <div class="s-tag">07 · أهداف الدراسة</div>
+  <h2 class="s-title">ما تسعى الدراسة إلى تحقيقه</h2>
+  <p class="s-lead">في ضوء مشكلة الدراسة وتساؤلاتها، تهدف الدراسة الحالية إلى تحقيق خمسة أهداف رئيسية متكاملة ومترابطة.</p>
+
+  <div class="obj-list">
+    <div class="obj-item reveal" data-d="1">
+      <div class="obj-num">01</div>
+      <div>
+        <div class="obj-title">قياس مستوى القبول</div>
+        <div class="obj-desc">التعرف على مستوى قبول أعضاء هيئة التدريس لاستخدام الذكاء الاصطناعي في الجامعات المصرية الثلاث (القاهرة، عين شمس، الإسكندرية) وفق أبعاده الأربعة: الفائدة المدركة وسهولة الاستخدام والنية السلوكية والدعم المؤسسي.</div>
+      </div>
+    </div>
+    <div class="obj-item reveal" data-d="2">
+      <div class="obj-num">02</div>
+      <div>
+        <div class="obj-title">قياس مستوى التبني</div>
+        <div class="obj-desc">قياس مستوى تبني ممارسات التعليم الرقمي لدى أعضاء هيئة التدريس بالجامعات المصرية من خلال أبعاده الأربعة: المنصات الرقمية، أدوات التعليم الذكي، التقييم الإلكتروني، والتفاعل الرقمي مع الطلاب.</div>
+      </div>
+    </div>
+    <div class="obj-item reveal" data-d="3">
+      <div class="obj-num">03</div>
+      <div>
+        <div class="obj-title">تحليل العلاقة الإحصائية</div>
+        <div class="obj-desc">تحليل طبيعة وقوة العلاقة الإحصائية بين قبول استخدام الذكاء الاصطناعي وتبني ممارسات التعليم الرقمي لدى أعضاء هيئة التدريس باستخدام معامل ارتباط بيرسون والأساليب الإحصائية المناسبة.</div>
+      </div>
+    </div>
+    <div class="obj-item reveal" data-d="4">
+      <div class="obj-num">04</div>
+      <div>
+        <div class="obj-title">اختبار الأثر المعنوي</div>
+        <div class="obj-desc">اختبار الأثر المعنوي لأبعاد قبول استخدام الذكاء الاصطناعي على تبني ممارسات التعليم الرقمي من خلال تحليل الانحدار الخطي المتعدد لتحديد أكثر الأبعاد تأثيراً وإسهاماً في التفسير.</div>
+      </div>
+    </div>
+    <div class="obj-item reveal" data-d="5">
+      <div class="obj-num">05</div>
+      <div>
+        <div class="obj-title">الكشف عن الفروق الديموغرافية</div>
+        <div class="obj-desc">الكشف عن الفروق في مستوى قبول الذكاء الاصطناعي وتبني التعليم الرقمي تبعاً للمتغيرات الديموغرافية: النوع، الدرجة العلمية (أستاذ/أستاذ مساعد/مدرس)، سنوات الخبرة، والتخصص الأكاديمي.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 08 HYPOTHESES ─────────────────────── -->
+<section class="section" id="s-hypo">
+  <div class="s-tag">08 · فروض الدراسة</div>
+  <h2 class="s-title">النموذج والفروض المقترحة</h2>
+  <p class="s-lead">تسعى الدراسة إلى التحقق من أربعة فروض رئيسية مستخلصة من الإطار النظري والدراسات السابقة.</p>
+
+  <div class="hypo-model reveal">
+    <div class="hm-grid">
+      <div class="hm-block hm-ind">
+        <div class="hm-label">المتغير المستقل</div>
+        <div class="hm-title">قبول استخدام الذكاء الاصطناعي</div>
+        <div class="hm-dims">
+          <div class="hm-dim" style="--c:#2d8c60">الفائدة المدركة</div>
+          <div class="hm-dim" style="--c:#52b788">سهولة الاستخدام المدركة</div>
+          <div class="hm-dim" style="--c:#c9a227">النية السلوكية للاستخدام</div>
+          <div class="hm-dim" style="--c:#1a5c44">الدعم المؤسسي المدرك</div>
+        </div>
+      </div>
+      <div class="hm-center">
+        <div class="hm-arrow">→</div>
+        <div class="hm-codes">
+          <span class="hc">H₁</span><span class="hc">H₂</span>
+          <span class="hc">H₂₁ H₂₂</span>
+          <span class="hc">H₂₃ H₂₄</span>
+          <span class="hc">H₃ H₄</span>
+        </div>
+      </div>
+      <div class="hm-block hm-dep">
+        <div class="hm-label">المتغير التابع</div>
+        <div class="hm-title">تبني ممارسات التعليم الرقمي</div>
+        <div class="hm-dims">
+          <div class="hm-dim" style="--c:#3b82f6">استخدام المنصات الرقمية</div>
+          <div class="hm-dim" style="--c:#8b5cf6">توظيف أدوات التعليم الذكي</div>
+          <div class="hm-dim" style="--c:#f59e0b">التقييم الإلكتروني</div>
+          <div class="hm-dim" style="--c:#ec4899">التفاعل الرقمي مع الطلاب</div>
+        </div>
+        <div style="margin-top:16px;font-size:0.72rem;color:var(--text-muted);border-top:1px solid var(--border);padding-top:12px">
+          المتغيرات الضابطة: النوع · الدرجة العلمية · سنوات الخبرة · التخصص
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hyps">
+    <div class="hyp reveal" data-d="1">
+      <div class="hyp-code">H₁</div>
+      <div class="hyp-text">توجد <strong>علاقة ذات دلالة إحصائية</strong> بين قبول أعضاء هيئة التدريس لاستخدام الذكاء الاصطناعي وتبني ممارسات التعليم الرقمي في الجامعات المصرية.</div>
+    </div>
+    <div class="hyp reveal" data-d="2">
+      <div class="hyp-code">H₂</div>
+      <div>
+        <div class="hyp-text">يوجد <strong>تأثير إيجابي ذو دلالة إحصائية</strong> لقبول أعضاء هيئة التدريس لاستخدام الذكاء الاصطناعي على تبني ممارسات التعليم الرقمي، وينبثق منه:</div>
+        <div class="hyp-sub">
+          <div class="hyp-sub-item"><span class="hs-code">H₂₁</span>يوجد أثر إيجابي دال إحصائياً <strong>للفائدة المدركة</strong> من استخدام الذكاء الاصطناعي على تبني ممارسات التعليم الرقمي.</div>
+          <div class="hyp-sub-item"><span class="hs-code">H₂₂</span>يوجد أثر إيجابي دال إحصائياً <strong>لسهولة الاستخدام المدركة</strong> للذكاء الاصطناعي على تبني ممارسات التعليم الرقمي.</div>
+          <div class="hyp-sub-item"><span class="hs-code">H₂₃</span>يوجد أثر إيجابي دال إحصائياً <strong>للنية السلوكية لاستخدام</strong> الذكاء الاصطناعي على تبني ممارسات التعليم الرقمي.</div>
+          <div class="hyp-sub-item"><span class="hs-code">H₂₄</span>يوجد أثر إيجابي دال إحصائياً <strong>للدعم المؤسسي المدرك</strong> لاستخدام الذكاء الاصطناعي على تبني ممارسات التعليم الرقمي.</div>
+        </div>
+      </div>
+    </div>
+    <div class="hyp reveal" data-d="3">
+      <div class="hyp-code">H₃</div>
+      <div class="hyp-text">توجد <strong>فروق ذات دلالة إحصائية</strong> في مستوى قبول أعضاء هيئة التدريس لاستخدام الذكاء الاصطناعي تعزى إلى <strong>المتغيرات الديموغرافية</strong> (النوع، الدرجة العلمية، سنوات الخبرة، التخصص).</div>
+    </div>
+    <div class="hyp reveal" data-d="4">
+      <div class="hyp-code">H₄</div>
+      <div class="hyp-text">توجد <strong>فروق ذات دلالة إحصائية</strong> في مستوى تبني ممارسات التعليم الرقمي تعزى إلى <strong>المتغيرات الديموغرافية</strong> (النوع، الدرجة العلمية، سنوات الخبرة، التخصص).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 09 VARIABLES ──────────────────────── -->
+<section class="section" id="s-vars">
+  <div class="s-tag">09 · متغيرات الدراسة</div>
+  <h2 class="s-title">بنية المتغيرات وأداة القياس</h2>
+  <p class="s-lead">يتكون النموذج من متغير مستقل وآخر تابع، إضافةً إلى متغيرات ديموغرافية ضابطة. يُقاس الجميع بمقياس ليكرت الخماسي.</p>
+
+  <div class="vars-layout">
+    <div class="var-col reveal" data-d="1">
+      <div class="vc-head ind"><div class="vc-tag">المتغير المستقل</div><div class="vc-title">قبول استخدام الذكاء الاصطناعي</div></div>
+      <div class="vc-body">
+        <div class="var-dim"><span class="vd-dot" style="--c:#2d8c60"></span>الفائدة المدركة</div>
+        <div class="var-dim"><span class="vd-dot" style="--c:#52b788"></span>سهولة الاستخدام المدركة</div>
+        <div class="var-dim"><span class="vd-dot" style="--c:#c9a227"></span>النية السلوكية للاستخدام</div>
+        <div class="var-dim"><span class="vd-dot" style="--c:#1a5c44"></span>الدعم المؤسسي المدرك</div>
+      </div>
+    </div>
+    <div class="var-col reveal" data-d="2">
+      <div class="vc-head dep"><div class="vc-tag">المتغير التابع</div><div class="vc-title">تبني ممارسات التعليم الرقمي</div></div>
+      <div class="vc-body">
+        <div class="var-dim"><span class="vd-dot" style="--c:#3b82f6"></span>استخدام المنصات التعليمية الرقمية</div>
+        <div class="var-dim"><span class="vd-dot" style="--c:#8b5cf6"></span>توظيف الأدوات الذكية في التدريس</div>
+        <div class="var-dim"><span class="vd-dot" style="--c:#f59e0b"></span>التقييم الإلكتروني</div>
+        <div class="var-dim"><span class="vd-dot" style="--c:#ec4899"></span>التفاعل الرقمي مع الطلاب</div>
+      </div>
+    </div>
+    <div class="var-col reveal" data-d="3">
+      <div class="vc-head dem"><div class="vc-tag">المتغيرات الضابطة</div><div class="vc-title">المتغيرات الديموغرافية</div></div>
+      <div class="vc-body">
+        <div class="var-dim"><span class="vd-dot" style="--c:#60a5fa"></span>النوع (ذكر / أنثى)</div>
+        <div class="var-dim"><span class="vd-dot" style="--c:#a78bfa"></span>الدرجة العلمية</div>
+        <div class="var-dim"><span class="vd-dot" style="--c:#34d399"></span>سنوات الخبرة</div>
+        <div class="var-dim"><span class="vd-dot" style="--c:#fbbf24"></span>التخصص الأكاديمي</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="measure-table reveal">
+    <div class="mt-title">الدراسات المستخدمة في بناء أداة القياس</div>
+    <table>
+      <thead><tr><th>المتغير</th><th>المرجع العلمي</th></tr></thead>
+      <tbody>
+        <tr><td>الفائدة المدركة</td><td>Romero-Rodríguez et al. (2023)</td></tr>
+        <tr><td>سهولة الاستخدام المدركة</td><td>George &amp; Sevak (2026)</td></tr>
+        <tr><td>النية السلوكية للاستخدام</td><td>عبد القادر (2026) · Bilgin &amp; Güngören (2025)</td></tr>
+        <tr><td>الدعم المؤسسي المدرك</td><td>Hazaimeh &amp; Al-Ansi (2024)</td></tr>
+        <tr><td>قبول أعضاء هيئة التدريس للذكاء الاصطناعي (كلّي)</td><td>Bilgin &amp; Güngören (2025)</td></tr>
+        <tr><td>تبني ممارسات التعليم الرقمي</td><td>الحربي (2025) · Stracke et al. (2026)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── 10 METHODOLOGY ────────────────────── -->
+<section class="section" id="s-method">
+  <div class="s-tag">10 · منهجية الدراسة</div>
+  <h2 class="s-title">التصميم البحثي والإجراءات</h2>
+  <p class="s-lead">تعتمد الدراسة المنهج الوصفي التحليلي بتصميم مسحي كمي، مع جمع البيانات من عينة تمثيلية موزعة على ثلاث جامعات مصرية كبرى.</p>
+
+  <div class="method-grid">
+    <div class="method-card reveal" data-d="1">
+      <div class="mc-icon">🔬</div>
+      <div class="mc-title">المنهج البحثي</div>
+      <div class="mc-text">تعتمد الدراسة على المنهج الوصفي التحليلي لملاءمته لطبيعة الدراسة التي تهدف إلى وصف الظاهرة وتحليل العلاقة والأثر بين متغيراتها.</div>
+      <div class="mc-highlight">📐 وصفي تحليلي · كمي · مسحي</div>
+    </div>
+    <div class="method-card reveal" data-d="2">
+      <div class="mc-icon">🏛️</div>
+      <div class="mc-title">مجتمع الدراسة</div>
+      <div class="mc-text">جميع أعضاء هيئة التدريس العاملين بالجامعات الحكومية المصرية (أستاذ، أستاذ مساعد، مدرس) وفق بيانات الجهاز المركزي للتعبئة العامة والإحصاء 2021.</div>
+      <div class="mc-highlight">👥 ١٢٦٩٠٠ عضو هيئة تدريس</div>
+    </div>
+    <div class="method-card reveal" data-d="3">
+      <div class="mc-icon">📐</div>
+      <div class="mc-title">حجم العينة</div>
+      <div class="mc-text">تم تحديد حجم العينة باستخدام معادلة Cochran (1977) بمستوى ثقة 95% وهامش خطأ 5%. والتوزيع بالأسلوب العمدي على الجامعات الثلاث تناسبياً.</div>
+      <div class="sample-dist">
+        <div class="sd-row">
+          <span class="sd-label">القاهرة 40%</span>
+          <div class="sd-track"><div class="sd-fill" style="background:#0d3b2e;--w:40%" data-w="40">جامعة القاهرة</div></div>
+          <span class="sd-n">154</span>
+        </div>
+        <div class="sd-row">
+          <span class="sd-label">عين شمس 35%</span>
+          <div class="sd-track"><div class="sd-fill" style="background:#1a5c44;--w:35%" data-w="35">جامعة عين شمس</div></div>
+          <span class="sd-n">134</span>
+        </div>
+        <div class="sd-row">
+          <span class="sd-label">الإسكندرية 25%</span>
+          <div class="sd-track"><div class="sd-fill" style="background:#2d8c60;--w:25%" data-w="25">جامعة الإسكندرية</div></div>
+          <span class="sd-n">96</span>
+        </div>
+      </div>
+    </div>
+    <div class="method-card reveal" data-d="4">
+      <div class="mc-icon">📋</div>
+      <div class="mc-title">أداة القياس</div>
+      <div class="mc-text">قائمة استقصاء إلكترونية من 3 محاور: المتغير المستقل + المتغير التابع + البيانات الديموغرافية. التوزيع بالبريد الإلكتروني والمنصات الرقمية. مقياس ليكرت الخماسي (1-5).</div>
+      <div class="mc-highlight">🔒 صدق الاتساق الداخلي + ألفا كرونباخ</div>
+    </div>
+  </div>
+
+  <h3 class="reveal" style="font-family:var(--font-h);font-size:1.1rem;font-weight:800;color:var(--green-deep);margin-bottom:24px">الأساليب الإحصائية المستخدمة</h3>
+  <div class="stats-methods">
+    <div class="sm-card reveal" data-d="1">
+      <div class="sm-head">الإحصاء الوصفي</div>
+      <div class="sm-item">التكرارات والنسب المئوية</div>
+      <div class="sm-item">المتوسط الحسابي</div>
+      <div class="sm-item">الانحراف المعياري</div>
+    </div>
+    <div class="sm-card reveal" data-d="2">
+      <div class="sm-head">صدق وثبات الأداة</div>
+      <div class="sm-item">معامل ألفا كرونباخ</div>
+      <div class="sm-item">صدق الاتساق الداخلي</div>
+      <div class="sm-item">Internal Consistency Validity</div>
+    </div>
+    <div class="sm-card reveal" data-d="3">
+      <div class="sm-head">الإحصاء الاستدلالي</div>
+      <div class="sm-item">معامل ارتباط بيرسون</div>
+      <div class="sm-item">الانحدار الخطي المتعدد</div>
+      <div class="sm-item">T-Test للفروق</div>
+      <div class="sm-item">ANOVA أحادي الاتجاه</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 11 SCOPE ──────────────────────────── -->
+<section class="section" id="s-scope">
+  <div class="s-tag">11 · حدود الدراسة</div>
+  <h2 class="s-title">نطاق وإطار الدراسة</h2>
+  <p class="s-lead">تتمثل حدود الدراسة في أربعة أبعاد تحدد الإطار البشري والمكاني والزماني والموضوعي للبحث الميداني.</p>
+
+  <div class="scope-grid">
+    <div class="scope-card reveal" data-d="1">
+      <div class="sco-icon">👥</div>
+      <div class="sco-type">الحدود البشرية</div>
+      <div class="sco-title">أعضاء هيئة التدريس</div>
+      <div class="sco-text">تقتصر الدراسة الحالية على أعضاء هيئة التدريس العاملين بالجامعات المصرية بمختلف درجاتهم العلمية، دون غيرهم من الفئات الأكاديمية أو الإدارية، نظراً لدورهم المحوري في توظيف تقنيات الذكاء الاصطناعي وتبني ممارسات التعليم الرقمي.</div>
+      <div class="sco-badge">🎓 أستاذ · أستاذ مساعد · مدرس</div>
+    </div>
+    <div class="scope-card reveal" data-d="2">
+      <div class="sco-icon">🗺️</div>
+      <div class="sco-type">الحدود المكانية</div>
+      <div class="sco-title">ثلاث جامعات مصرية حكومية</div>
+      <div class="sco-text">تُجرى الدراسة في جامعات القاهرة وعين شمس والإسكندرية، باعتبارها المجال المكاني الذي يعكس واقع التعليم العالي في مصر، ويتيح إمكانية تعميم النتائج في إطار البيئة الجامعية المصرية.</div>
+      <div class="sco-badge">🏛️ القاهرة · عين شمس · الإسكندرية</div>
+    </div>
+    <div class="scope-card reveal" data-d="3">
+      <div class="sco-icon">📅</div>
+      <div class="sco-type">الحدود الزمانية</div>
+      <div class="sco-title">أكتوبر ٢٠٢٥ — فبراير ٢٠٢٦</div>
+      <div class="sco-text">تم جمع البيانات الأولية اللازمة لإتمام الدراسة الميدانية خلال هذه الفترة، وهي الإطار الزمني الذي تعكس نتائجه واقع قبول أعضاء هيئة التدريس لاستخدام الذكاء الاصطناعي.</div>
+      <div class="sco-badge">⏱️ فترة جمع البيانات: ٥ أشهر</div>
+    </div>
+    <div class="scope-card reveal" data-d="4">
+      <div class="sco-icon">📌</div>
+      <div class="sco-type">الحدود الموضوعية</div>
+      <div class="sco-title">قبول الذكاء الاصطناعي وممارسات التعليم الرقمي</div>
+      <div class="sco-text">تقتصر الدراسة على بحث تأثير قبول أعضاء هيئة التدريس لاستخدام الذكاء الاصطناعي بأبعاده المحددة الأربعة على تبني ممارسات التعليم الرقمي بأبعاده الأربعة.</div>
+      <div class="sco-badge">🔗 ٤ أبعاد مستقلة · ٤ أبعاد تابعة</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 12 STRUCTURE ──────────────────────── -->
+<section class="section" id="s-structure">
+  <div class="s-tag">12 · هيكل الدراسة</div>
+  <h2 class="s-title">خارطة الفصول والمحاور</h2>
+  <p class="s-lead">يتكون هيكل الدراسة من خمسة فصول متسلسلة تغطي جميع مراحل البحث العلمي من الإطار العام حتى النتائج والتوصيات.</p>
+
+  <div class="chapters">
+    <div class="chapter reveal" data-d="1">
+      <div class="ch-circle">١</div>
+      <div class="ch-title">الإطار العام للدراسة</div>
+      <div class="ch-items">
+        <div class="ch-item">المقدمة والمصطلحات</div>
+        <div class="ch-item">الدراسات السابقة</div>
+        <div class="ch-item">مشكلة الدراسة وأهميتها</div>
+        <div class="ch-item">الأهداف والفروض</div>
+        <div class="ch-item">النموذج والحدود</div>
+      </div>
+    </div>
+    <div class="chapter reveal" data-d="2">
+      <div class="ch-circle">٢</div>
+      <div class="ch-title">الإطار النظري</div>
+      <div class="ch-items">
+        <div class="ch-item">نماذج قبول التكنولوجيا</div>
+        <div class="ch-item">الذكاء الاصطناعي في التعليم</div>
+        <div class="ch-item">ممارسات التعليم الرقمي</div>
+        <div class="ch-item">التحول الرقمي الجامعي</div>
+      </div>
+    </div>
+    <div class="chapter reveal" data-d="3">
+      <div class="ch-circle">٣</div>
+      <div class="ch-title">منهجية الدراسة</div>
+      <div class="ch-items">
+        <div class="ch-item">تصميم البحث</div>
+        <div class="ch-item">مجتمع وعينة الدراسة</div>
+        <div class="ch-item">بناء أداة القياس</div>
+        <div class="ch-item">صدق وثبات الأداة</div>
+        <div class="ch-item">الأساليب الإحصائية</div>
+      </div>
+    </div>
+    <div class="chapter reveal" data-d="4">
+      <div class="ch-circle">٤</div>
+      <div class="ch-title">الدراسة الميدانية</div>
+      <div class="ch-items">
+        <div class="ch-item">جمع البيانات الميدانية</div>
+        <div class="ch-item">التحليل الوصفي</div>
+        <div class="ch-item">اختبار الفروض</div>
+        <div class="ch-item">تحليل الانحدار والارتباط</div>
+      </div>
+    </div>
+    <div class="chapter reveal" data-d="5">
+      <div class="ch-circle">٥</div>
+      <div class="ch-title">النتائج والتوصيات</div>
+      <div class="ch-items">
+        <div class="ch-item">ملخص النتائج الرئيسية</div>
+        <div class="ch-item">مناقشة النتائج</div>
+        <div class="ch-item">التوصيات العملية</div>
+        <div class="ch-item">الدراسات المستقبلية</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 13 REFERENCES ─────────────────────── -->
+<section class="section" id="s-refs" style="min-height:auto">
+  <div class="refs-decor"><div class="rdot rdot-1"></div><div class="rdot rdot-2"></div></div>
+  <div class="s-tag">13 · المراجع</div>
+  <h2 class="s-title">قائمة المصادر والمراجع</h2>
+
+  <div class="refs-tabs reveal">
+    <button class="ref-tab on" onclick="filterRefs('ar',this)">المراجع العربية</button>
+    <button class="ref-tab" onclick="filterRefs('en',this)">المراجع الأجنبية</button>
+  </div>
+
+  <div class="refs-list show" id="refs-ar">
+    <div class="ref-item"><span class="ri-num">1</span><span class="ri-text"><em>إبراهيم، نهى.</em> (2024). تأثير استخدام أدوات الذكاء الاصطناعي في التنبؤ بسلوك المستهلك — دراسة شبه تجريبية في إطار نموذج قبول التكنولوجيا. <span class="journal">مجلة البحوث الإعلامية</span>، 70(2)، 987-1070.</span></div>
+    <div class="ref-item"><span class="ri-num">2</span><span class="ri-text"><em>الحربي، وجدان.</em> (2025). تقييم مستوى استخدام التقنيات الرقمية في العملية التعليمية من قبل أعضاء هيئة التدريس بجامعة طيبة. <span class="journal">مجلة كلية التربية (أسيوط)</span>، 41(3.2)، 102-125.</span></div>
+    <div class="ref-item"><span class="ri-num">3</span><span class="ri-text"><em>السعيد، غزيل.</em> (2025). كفايات استخدام الذكاء الاصطناعي لدى معلمات المرحلة الثانوية: رؤى في ضوء نموذج التقبل التكنولوجي (TAM). <span class="journal">مجلة العلوم التربوية والنفسية</span>، 18(3)، 1405-1443.</span></div>
+    <div class="ref-item"><span class="ri-num">4</span><span class="ri-text"><em>القحطاني، عبير.</em> (2024). العوامل المؤثرة على استخدام تطبيقات الذكاء الاصطناعي التوليدي في التعلم في ضوء نظرية UTAUT. <span class="journal">مجلة كلية التربية (أسيوط)</span>، 40(10)، 77-130.</span></div>
+    <div class="ref-item"><span class="ri-num">5</span><span class="ri-text"><em>المبحوح، أحمد، وآخرون.</em> (2026). ممارسات الذكاء الاصطناعي في بناء المحتوى التعليمي الرقمي: توجهات أعضاء هيئة التدريس في الجامعات الفلسطينية. <span class="journal">مجلة رابطة التربويين الفلسطينيين</span>، 11(19)، 275-296.</span></div>
+    <div class="ref-item"><span class="ri-num">6</span><span class="ri-text"><em>عبد العال، السيد.</em> (2025). استخدام نموذج TAM في قياس تأثير خصائص ChatGPT على النوايا السلوكية. <span class="journal">Arab Journal of Administration</span>، 45(6).</span></div>
+    <div class="ref-item"><span class="ri-num">7</span><span class="ri-text"><em>عبد القادر، رقية.</em> (2026). تقبّل طلاب المرحلة الثانوية لاستخدام تطبيقات الذكاء الاصطناعي كأداة أولية لدعم الصحة النفسية. <span class="journal">مجلة العلوم الإنسانية والطبيعية</span>، 7(1)، 435-442.</span></div>
+    <div class="ref-item"><span class="ri-num">8</span><span class="ri-text"><em>مصطفى، رانيا.</em> (2024). قبول تطبيقات الذكاء الاصطناعي في سياق تعليمي وأثره في الدافعية لتعلمها لدى طلاب STEM. <span class="journal">مجلة كلية التربية (أسوان)</span>، 46(46)، 1-69.</span></div>
+    <div class="ref-item"><span class="ri-num">9</span><span class="ri-text"><em>مودي، شيرين.</em> (2025). إعادة تشكيل الإعلانات المصرية: قبول أو رفض استخدام الذكاء الاصطناعي في إنتاج الإعلانات. <span class="journal">المجلة المصرية لبحوث الأعلام</span>، 2025(91)، 19-96.</span></div>
+    <div class="ref-item"><span class="ri-num">10</span><span class="ri-text"><em>هواش، زهراء، ومحارب، ياسمين.</em> (2026). دور الذكاء الاصطناعي في تعزيز الكفايات التعليمية لمعلمي الصفوف الأولى في منطقة النقب. <span class="journal">مجلة العلوم الإنسانية والطبيعية</span>، 7(1)، 210-233.</span></div>
+    <div class="ref-item"><span class="ri-num">11</span><span class="ri-text"><em>الجهاز المركزي للتعبئة العامة والإحصاء.</em> (2021). النشرة السنوية للطلاب المقيدين وأعضاء هيئة التدريس بالتعليم العالي 2020/2021. القاهرة.</span></div>
+  </div>
+
+  <div class="refs-list" id="refs-en">
+    <div class="ref-item"><span class="ri-num">1</span><span class="ri-text"><em>Bilgin, S., &amp; Güngören, Ö. C.</em> (2025). A detailed examination of faculty acceptance of artificial intelligence: Insights from key variables. <span class="journal">Journal of Pedagogical Sociology and Psychology</span>, 7(3), 64-77.</span></div>
+    <div class="ref-item"><span class="ri-num">2</span><span class="ri-text"><em>Cochran, W. G.</em> (1977). <span class="journal">Sampling techniques</span> (3rd ed.). John Wiley &amp; Sons.</span></div>
+    <div class="ref-item"><span class="ri-num">3</span><span class="ri-text"><em>Crompton, H., &amp; Burke, D.</em> (2023). Artificial intelligence in higher education: the state of the field. <span class="journal">International Journal of Educational Technology in Higher Education</span>, 20(1), 1-22.</span></div>
+    <div class="ref-item"><span class="ri-num">4</span><span class="ri-text"><em>Davis, F. D.</em> (1989). Perceived usefulness, perceived ease of use, and user acceptance of information technology. <span class="journal">MIS Quarterly</span>, 13(3), 319-340.</span></div>
+    <div class="ref-item"><span class="ri-num">5</span><span class="ri-text"><em>Gaber, S. A., Shahat, H. A., &amp; Alkhateeb, I. A.</em> (2023). Faculty members' awareness of artificial intelligence and its relationship to technology acceptance and digital competencies. <span class="journal">International Journal of Learning, Teaching and Educational Research</span>, 22(7), 365-384.</span></div>
+    <div class="ref-item"><span class="ri-num">6</span><span class="ri-text"><em>George, B., &amp; Sevak, K. Y.</em> (2026). Artificial intelligence in higher education: Opportunities and concerns. <span class="journal">Research and Practice in Technology Enhanced Learning</span>, 21(73).</span></div>
+    <div class="ref-item"><span class="ri-num">7</span><span class="ri-text"><em>Hazaimeh, M., &amp; Al-Ansi, A. M.</em> (2024). Model of AI acceptance in higher education: arguing teaching staff and students perspectives. <span class="journal">The International Journal of Information and Learning Technology</span>, 41(4), 371-393.</span></div>
+    <div class="ref-item"><span class="ri-num">8</span><span class="ri-text"><em>Lindner, J. R., Clemons, C. A., &amp; McKibben, J. D.</em> (2026). Artificial intelligence in education: Perspectives of secondary teachers. <span class="journal">Advancements in Agricultural Development</span>, 7(2), 109-124.</span></div>
+    <div class="ref-item"><span class="ri-num">9</span><span class="ri-text"><em>McDonald, N., Johri, A., Ali, A., &amp; Collier, A. H.</em> (2025). Generative artificial intelligence in higher education: Evidence from an analysis of institutional policies. <span class="journal">Computers in Human Behavior: Artificial Humans</span>, 3, 100121.</span></div>
+    <div class="ref-item"><span class="ri-num">10</span><span class="ri-text"><em>OECD.</em> (2021). <span class="journal">Digital education outlook: Pushing the frontiers with AI, blockchain and robots</span>. OECD Publishing.</span></div>
+    <div class="ref-item"><span class="ri-num">11</span><span class="ri-text"><em>Perez, R. C. L.</em> (2024). AI in higher education: Faculty perspective towards artificial intelligence through UTAUT approach. <span class="journal">Ho Chi Minh City Open University Journal of Science</span>, 14(4), 32-50.</span></div>
+    <div class="ref-item"><span class="ri-num">12</span><span class="ri-text"><em>Rane, N., Choudhary, S. P., &amp; Rane, J.</em> (2024). Acceptance of artificial intelligence: key factors, challenges, and implementation strategies. <span class="journal">Journal of Applied Artificial Intelligence</span>, 5(2), 50-70.</span></div>
+    <div class="ref-item"><span class="ri-num">13</span><span class="ri-text"><em>Romero-Rodríguez, J. M., et al.</em> (2023). Use of ChatGPT at university as a tool for complex thinking: Students' perceived usefulness. <span class="journal">Journal of New Approaches in Educational Research</span>, 12(2), 323-339.</span></div>
+    <div class="ref-item"><span class="ri-num">14</span><span class="ri-text"><em>Sajja, R., Sermet, Y., Cikmaz, M., et al.</em> (2024). Artificial intelligence-enabled intelligent assistant for personalized and adaptive learning in higher education. <span class="journal">Information</span>, 15(10), 596.</span></div>
+    <div class="ref-item"><span class="ri-num">15</span><span class="ri-text"><em>Stracke, C. M., et al.</em> (2026). Artificial intelligence policies for higher education: Manifesto for critical considerations and a roadmap. <span class="journal">MAP Education and Humanities</span>, 6, 61-73.</span></div>
+  </div>
+
+  <div class="refs-footer reveal">
+    <div class="rf-col"><h5>الباحث</h5><p>سالم محمد فزاع سالم<br/>كلية التجارة<br/>جامعة بورسعيد</p></div>
+    <div class="rf-col"><h5>الجامعات</h5><p>جامعة القاهرة<br/>جامعة عين شمس<br/>جامعة الإسكندرية</p></div>
+    <div class="rf-col"><h5>تفاصيل البحث</h5><p>عينة: ٣٨٤ عضو هيئة تدريس<br/>المجتمع: ١٢٦٩٠٠ عضو<br/>الفترة: أكتوبر ٢٠٢٥ — فبراير ٢٠٢٦</p></div>
+    <div class="rf-col"><h5>المراجع</h5><p>عربية: ١١ مرجعاً<br/>أجنبية: ١٥ مرجعاً<br/>إجمالي: ٢٦ مرجعاً</p></div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<!-- Mobile Toggle -->
+<button class="mob-toggle" id="mobToggle" onclick="toggleSidebar()">☰</button>
+
+<script>
+// ── Sidebar toggle (mobile) ─────────────
+function toggleSidebar(){
+  const sb=document.getElementById('sidebar');
+  sb.classList.toggle('open');
+}
+// ── Nav active ──────────────────────────
+function setActive(el){
+  document.querySelectorAll('.nav-link').forEach(a=>a.classList.remove('active'));
+  el.classList.add('active');
+  if(window.innerWidth<900)document.getElementById('sidebar').classList.remove('open');
+}
+// ── Scroll to ───────────────────────────
+function scrollTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
+// ── Scroll-spy ──────────────────────────
+const main=document.querySelector('.main');
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-link');
+function updateActive(){
+  let cur='';
+  sections.forEach(s=>{
+    const top=s.getBoundingClientRect().top;
+    if(top<=120)cur=s.id;
+  });
+  navLinks.forEach(a=>{
+    a.classList.toggle('active',a.getAttribute('href')==='#'+cur);
+  });
+}
+window.addEventListener('scroll',updateActive,{passive:true});
+// ── Reveal on scroll ────────────────────
+const revObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');revObs.unobserve(e.target)}});
+},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
+// ── Stats animation ─────────────────────
+function animNum(el,target,dec=0,dur=1500){
+  const start=performance.now();
+  function step(now){
+    const p=Math.min((now-start)/dur,1);
+    const ease=1-Math.pow(1-p,3);
+    el.textContent=(ease*target).toFixed(dec);
+    if(p<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+const statsObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    // number counters
+    e.target.querySelectorAll('.sb-val[data-target]').forEach(el=>{
+      animNum(el,parseFloat(el.dataset.target),parseInt(el.dataset.dec||0));
+    });
+    // SVG rings
+    e.target.querySelectorAll('.ring-fg[data-pct]').forEach(ring=>{
+      const pct=parseFloat(ring.dataset.pct);
+      const r=45;const circ=2*Math.PI*r;
+      ring.style.strokeDasharray=circ;
+      ring.style.strokeDashoffset=circ-(pct/100)*circ;
+    });
+    // bars
+    e.target.querySelectorAll('.sb-fill[data-w]').forEach(bar=>{
+      setTimeout(()=>{bar.style.width=bar.dataset.w+'%'},300);
+    });
+    // sample dist bars
+    e.target.querySelectorAll('.sd-fill[data-w]').forEach(bar=>{
+      setTimeout(()=>{bar.style.width=bar.dataset.w+'%'},400);
+    });
+    statsObs.unobserve(e.target);
+  });
+},{threshold:0.3});
+document.querySelectorAll('.stat-box,.method-card').forEach(el=>statsObs.observe(el));
+
+// ── Study filter ────────────────────────
+function filterStudies(cat,btn){
+  document.querySelectorAll('.pcat-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.study-card').forEach(c=>{
+    c.classList.toggle('show',cat==='all'||c.dataset.cat===cat);
+  });
+}
+// ── Refs filter ─────────────────────────
+function filterRefs(lang,btn){
+  document.querySelectorAll('.ref-tab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('refs-ar').classList.toggle('show',lang==='ar');
+  document.getElementById('refs-en').classList.toggle('show',lang==='en');
+}
+</script>
+</body>
+</html>
